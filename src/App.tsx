@@ -7,9 +7,15 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
+import { useState } from "react";
+import FormLogin from "./comps/FormLogin";
 
 function App() {
-  return (
+  const [user, setuser] = useState();
+
+  return !user ? (
+    <FormLogin />
+  ) : (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
