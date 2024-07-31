@@ -11,7 +11,7 @@ import { useState } from "react";
 import FormLogin from "./comps/FormLogin";
 
 function App() {
-  const [user, setuser] = useState();
+  const [user] = useState();
 
   return !user ? (
     <FormLogin />
