@@ -7,9 +7,12 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import FormLogin from "./comps/FormLogin";
 import { Login } from "./helpers/sb";
+import Logout from "./pages/Logout";
+
+export const UserContext = createContext<any>(undefined);
 
 function App() {
   const [user, setuser] = useState();
@@ -42,15 +45,18 @@ function App() {
   return !user ? (
     <FormLogin login={login} error={error} loading={loading} />
   ) : (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <UserContext.Provider value={[user, setuser]}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="logout" element={<Logout />} />
+            <Route path="*" element={<NoPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
   );
 }
 
