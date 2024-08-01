@@ -23,7 +23,7 @@ const Layout = () => {
       <nav className="   ">
         <ul className={` h-fit   sm:h-[100vh]  bg-sky-500  `}>
           <button className=" w-full p-1  " onClick={toggleMenu}>
-            <Logo small dark />
+            <Logo small dark iconOnly={!showMenu} />
           </button>
 
           <div

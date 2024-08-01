@@ -3,9 +3,11 @@ import hospital from "../assets/hospital.png";
 export default function Logo({
   small,
   dark,
+  iconOnly,
 }: {
   small: boolean;
   dark: boolean;
+  iconOnly: boolean;
 }) {
   return (
     <div
@@ -18,9 +20,11 @@ export default function Logo({
       >
         <img src={hospital} />
       </span>
-      <span className={` font-serif italic ${dark && "text-white"}`}>
-        LaLouise
-      </span>
+      {iconOnly && (
+        <span className={` font-serif italic ${dark && "text-white"}`}>
+          LaLouise
+        </span>
+      )}
     </div>
   );
 }
