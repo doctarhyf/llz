@@ -1,4 +1,25 @@
-export default function FormLogin() {
+import React, { useEffect, useRef } from "react";
+import { Login } from "../helpers/sb";
+
+export default function FormLogin({
+  login,
+  error,
+  loading,
+}: {
+  login: (phone: string, password: string) => void;
+  error: any;
+  loading: boolean;
+}) {
+  const rphone = useRef<HTMLInputElement | null>(null);
+  const rpassword = useRef<HTMLInputElement | null>(null);
+
+  async function onLogin() {
+    const phone = rphone.current?.value || "";
+    const password = rpassword.current?.value || "";
+
+    login(phone, password);
+  }
+
   return (
     <section className=" flex bg-red-600 h-[100vh]  ">
       <div className=" bg-sky-600 text-white w-full md:w-1/2 p-4 ">
@@ -8,6 +29,7 @@ export default function FormLogin() {
             <div>Phone</div>
             <div>
               <input
+                ref={rphone}
                 className=" border-transparent hover:border-sky-300 focus:border-sky-400 outline-none p-1 rounded-md bg-slate-800 text-white  "
                 type="text"
                 placeholder="089302849"
@@ -18,6 +40,7 @@ export default function FormLogin() {
             <div>Password</div>
             <div>
               <input
+                ref={rpassword}
                 className=" border-transparent hover:border-sky-300 focus:border-sky-400 outline-none p-1 rounded-md bg-slate-800 text-white  "
                 type="password"
                 placeholder="000000"
@@ -25,8 +48,19 @@ export default function FormLogin() {
             </div>
           </div>
 
+          {error && error.error && (
+            <div className="  bg-red-500 text-white p-1 rounded-md text-xs ">
+              {JSON.stringify(error)}
+            </div>
+          )}
+
+          {loading && <div>Loading ...</div>}
+
           <div>
-            <button className="bg-white/20 my-2 hover:bg-white/40 border-slate-400 rounded-md p-2 ">
+            <button
+              onClick={onLogin}
+              className="bg-white/20 my-2 hover:bg-white/40 border-slate-400 rounded-md p-2 "
+            >
               Login
             </button>
           </div>

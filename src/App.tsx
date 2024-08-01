@@ -9,12 +9,38 @@ import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import { useState } from "react";
 import FormLogin from "./comps/FormLogin";
+import { Login } from "./helpers/sb";
 
 function App() {
-  const [user] = useState();
+  const [user, setuser] = useState();
+  const [error, seterror] = useState<any>(undefined);
+  const [loading, setloading] = useState<boolean>(false);
+
+  async function login(phone: string, password: string) {
+    try {
+      setloading(true);
+      seterror(undefined);
+      const user = await Login(phone, password);
+      console.log(user);
+
+      if (user.error) {
+        // alert("Error login\n" + JSON.stringify(user));
+        seterror(user);
+      } else {
+        setuser(user);
+        seterror(undefined);
+      }
+      setloading(false);
+    } catch (e) {
+      console.log(e);
+      //alert("Error login\n" + JSON.stringify(e));
+      setloading(false);
+      seterror({ error: true, dt: JSON.stringify(e) });
+    }
+  }
 
   return !user ? (
-    <FormLogin />
+    <FormLogin login={login} error={error} loading={loading} />
   ) : (
     <BrowserRouter>
       <Routes>
