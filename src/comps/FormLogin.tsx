@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from "react";
-import { Login } from "../helpers/sb";
+import { useRef } from "react";
 
 export default function FormLogin({
   login,
