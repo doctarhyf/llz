@@ -1,4 +1,5 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
+import Logo from "../comps/Logo";
 
 const LINKS = [
   { to: "/", title: "Home" },
@@ -12,18 +13,19 @@ const Layout = () => {
   const location = useLocation();
 
   return (
-    <>
+    <div className="flex">
       <nav>
-        <ul className=" flex flex-col  md:flex-row  bg-sky-800  ">
+        <ul className=" flex flex-col bg-gradient-to-b from-sky-500 to-sky-400  w-fit h-[100vh]  ">
+          <Logo small dark />
           {LINKS.map((lk, i) =>
             lk.space ? (
               <li key={i} className=" flex-grow "></li>
             ) : (
               <li key={i}>
                 <Link
-                  className={` w-full md:w-fit  ${
-                    location.pathname === lk.to ? "bg-sky-500" : ""
-                  }   p-2 inline-block hover:bg-white/20   `}
+                  className={` w-full   ${
+                    location.pathname === lk.to ? "bg-black text-sky-500" : ""
+                  }   p-2 inline-block hover:bg-black/40    `}
                   to={lk.to as string}
                 >
                   {lk.title}
@@ -34,8 +36,10 @@ const Layout = () => {
         </ul>
       </nav>
 
-      <Outlet />
-    </>
+      <div className="p-4">
+        <Outlet />
+      </div>
+    </div>
   );
 };
 

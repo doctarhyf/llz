@@ -11,11 +11,12 @@ import { createContext, useState } from "react";
 import FormLogin from "./comps/FormLogin";
 import { Login } from "./helpers/sb";
 import Logout from "./pages/Logout";
+import { User } from "./types";
 
 export const UserContext = createContext<any>(undefined);
 
 function App() {
-  const [user, setuser] = useState();
+  const [user, setuser] = useState<User>();
   const [error, seterror] = useState<any>(undefined);
   const [loading, setloading] = useState<boolean>(false);
 
@@ -23,7 +24,7 @@ function App() {
     try {
       setloading(true);
       seterror(undefined);
-      const user = await Login(phone, password);
+      const user = (await Login(phone, password)) as User | any;
       console.log(user);
 
       if (user.error) {

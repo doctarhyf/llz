@@ -1,14 +1,13 @@
 import { useRef } from "react";
+import Logo from "./Logo";
 
-export default function FormLogin({
-  login,
-  error,
-  loading,
-}: {
+type props = {
   login: (phone: string, password: string) => void;
   error: any;
   loading: boolean;
-}) {
+};
+
+export default function FormLogin({ login, error, loading }: props) {
   const rphone = useRef<HTMLInputElement | null>(null);
   const rpassword = useRef<HTMLInputElement | null>(null);
 
@@ -20,30 +19,46 @@ export default function FormLogin({
   }
 
   return (
-    <section className=" flex bg-red-600 h-[100vh]  ">
-      <div className=" bg-sky-600 text-white w-full md:w-1/2 p-4 ">
-        <div className=" md:mx-0 items-center flex flex-col justify-center   ">
-          <div className=" text-4xl ">LaLouise</div>
-          <div>
-            <div>Phone</div>
+    <section className=" flex  h-[100vh]  ">
+      <div className="  w-full md:w-1/2 p-4 ">
+        <div className="  flex flex-col items-center ">
+          <Logo />
+          <div className=" w-full sm:w-fit">
+            <div className=" text-slate-500 text-sm mt-2 ">Phone</div>
             <div>
               <input
                 ref={rphone}
-                className=" border-transparent hover:border-sky-300 focus:border-sky-400 outline-none p-1 rounded-md bg-slate-800 text-white  "
+                className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
                 type="text"
                 placeholder="089302849"
               />
             </div>
           </div>
-          <div>
-            <div>Password</div>
+          <div className=" w-full sm:w-fit">
+            <div className=" text-slate-500 text-sm mt-2 ">Phone</div>
             <div>
               <input
                 ref={rpassword}
-                className=" border-transparent hover:border-sky-300 focus:border-sky-400 outline-none p-1 rounded-md bg-slate-800 text-white  "
+                className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
                 type="password"
                 placeholder="000000"
               />
+            </div>
+          </div>
+
+          <div>
+            <button
+              onClick={onLogin}
+              className=" border-sky-500  border my-2 w-52 text-sky-500 hover:text-white hover:bg-sky-500 "
+            >
+              Login
+            </button>
+          </div>
+
+          <div className=" text-[10pt] text-center my-6 text-black/90 absolute bottom-0  ">
+            <div>&copy;LaLouise 2024, all rights reserved.</div>
+            <div>
+              Code and design by <a href="/">@doctarhyf</a>
             </div>
           </div>
 
@@ -54,18 +69,19 @@ export default function FormLogin({
           )}
 
           {loading && <div>Loading ...</div>}
-
-          <div>
-            <button
-              onClick={onLogin}
-              className="bg-white/20 my-2 hover:bg-white/40 border-slate-400 rounded-md p-2 "
-            >
-              Login
-            </button>
-          </div>
         </div>
       </div>
-      <div className="  hidden md:block bg-black w-1/2  p-4 ">Promo</div>
+      <div className=" bg-gradient-to-br from-sky-500 text-white to-purple-600   hidden md:block bg-black/20 w-1/2  p-4 ">
+        <div className=" text-xl font-serif italic ">
+          Bienvenu chez la louise
+        </div>
+        <ul className=" list-disc list-inside text-sm text-white/90  ">
+          <li>Gestion des malades</li>
+          <li>Gestion des infirmiers</li>
+          <li>Gestion des RDV</li>
+          <li>Gestion finance</li>
+        </ul>
+      </div>
     </section>
   );
 }
