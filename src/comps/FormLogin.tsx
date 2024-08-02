@@ -22,7 +22,7 @@ export default function FormLogin({ login, error, loading }: props) {
     <section className=" flex  h-[100vh]  ">
       <div className="  w-full md:w-1/2 p-4 ">
         <div className="  flex flex-col items-center ">
-          <Logo />
+          <Logo small={false} dark={false} iconOnly={false} />
           <div className=" w-full sm:w-fit">
             <div className=" text-slate-500 text-sm mt-2 ">Phone</div>
             <div>
@@ -31,6 +31,7 @@ export default function FormLogin({ login, error, loading }: props) {
                 className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
                 type="text"
                 placeholder="089302849"
+                defaultValue={"0893092849"}
               />
             </div>
           </div>
@@ -42,6 +43,7 @@ export default function FormLogin({ login, error, loading }: props) {
                 className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
                 type="password"
                 placeholder="000000"
+                defaultValue={"000000"}
               />
             </div>
           </div>

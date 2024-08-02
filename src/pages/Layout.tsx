@@ -4,8 +4,9 @@ import { useState } from "react";
 
 const LINKS = [
   { to: "/", title: "Home" },
-  { to: "/about", title: "About" },
-  { to: "/support", title: "Support" },
+  { to: "/patients", title: "Patients" },
+  { to: "/pharmacie", title: "Pharmacie" },
+  { to: "/finances", title: "Finances" },
   { space: true },
   { to: "/logout", title: "Logout" },
 ];

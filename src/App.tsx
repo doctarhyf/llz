@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg"; */
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
-import About from "./pages/About";
+
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import { createContext, useState } from "react";
@@ -12,6 +12,9 @@ import FormLogin from "./comps/FormLogin";
 import { Login } from "./helpers/sb";
 import Logout from "./pages/Logout";
 import { User } from "./types";
+import Pharmacie from "./pages/Pharmacie";
+import Finances from "./pages/Finances";
+import Patients from "./pages/Patients";
 
 export const UserContext = createContext<any>(undefined);
 
@@ -51,7 +54,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
+            <Route path="patients" element={<Patients />} />
+            <Route path="pharmacie" element={<Pharmacie />} />
+            <Route path="finances" element={<Finances />} />
             <Route path="logout" element={<Logout />} />
             <Route path="*" element={<NoPage />} />
           </Route>
