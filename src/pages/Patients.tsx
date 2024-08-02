@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FormNewPatient from "../comps/forms/FormNewPatient";
+import Button from "../comps/Button";
 
 export default function Patients() {
   //const [loading, setloading] = useState<boolean>(false);
@@ -9,7 +10,7 @@ export default function Patients() {
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
       <div>
-        <button onClick={(_) => setShowForm(!showForm)}>NEW AGENT</button>
+        <Button onClick={(_) => setShowForm(!showForm)} />
       </div>
       {showForm ? (
         <FormNewPatient />

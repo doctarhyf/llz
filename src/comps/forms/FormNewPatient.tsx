@@ -1,4 +1,5 @@
-import { DEP } from "../../other/const";
+import { DEP } from "../../helpers/const";
+import { formatDateToYYYYMMDD } from "../../helpers/funcs";
 
 export default function FormNewPatient() {
   return (
@@ -6,27 +7,43 @@ export default function FormNewPatient() {
       <div>
         <div>
           <div>Nom</div>
-          <input type="text" />
+          <input
+            type="text"
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
         </div>
         <div>
-          <div>Nom</div>
-          <input type="text" />
+          <div>Postnom</div>
+          <input
+            type="text"
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
         </div>
         <div>
-          <div>Nom</div>
-          <input type="text" />
+          <div>Prenom</div>
+          <input
+            type="text"
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
         </div>
         <div>
-          <div>Nom</div>
-          <input type="text" />
+          <div>Phone</div>
+          <input
+            type="text"
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
         </div>
         <div>
-          <div>Nom</div>
-          <input type="date" defaultValue={"2024-08-01"} />
+          <div>DOB</div>
+          <input
+            type="date"
+            defaultValue={formatDateToYYYYMMDD(new Date())}
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
         </div>
         <div>
           <div>Departement</div>
-          <select>
+          <select className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  ">
             {Object.entries(DEP).map(
               (dep: [key: string, { code: string }], _: number) => (
                 <option value={dep[1].code}>{dep[0]}</option>

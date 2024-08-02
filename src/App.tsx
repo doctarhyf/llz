@@ -11,7 +11,7 @@ import { createContext, useState } from "react";
 import FormLogin from "./comps/forms/FormLogin";
 import { Login } from "./helpers/sb";
 import Logout from "./pages/Logout";
-import { User } from "./other/types";
+import { User } from "./helpers/types";
 import Pharmacie from "./pages/Pharmacie";
 import Finances from "./pages/Finances";
 import Patients from "./pages/Patients";

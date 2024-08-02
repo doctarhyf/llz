@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import Logo from "../Logo";
+import Button from "../Button";
 
 type props = {
   login: (phone: string, password: string) => void;
@@ -49,12 +50,7 @@ export default function FormLogin({ login, error, loading }: props) {
           </div>
 
           <div>
-            <button
-              onClick={onLogin}
-              className=" border-sky-500  border my-2 w-52 text-sky-500 hover:text-white hover:bg-sky-500 "
-            >
-              Login
-            </button>
+            <Button onClick={onLogin} />
           </div>
 
           <div className=" text-[10pt] text-center my-6 text-black/90 absolute bottom-0  ">
