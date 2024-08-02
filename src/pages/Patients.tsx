@@ -108,21 +108,22 @@ export default function Patients() {
   }
 
   async function onPatientExitHospital(pat: TPatient | undefined) {
+    console.log(pat);
     if (
       window.confirm(`Sortie hopital du patient ${pat?.prenom} ${pat?.nom}?`)
     ) {
       const r = await SB.UpdateItem(TABLES_NAMES.PATIENTS, {
         id: pat?.id,
-        left_at: new Date().getTime(),
+        left_at: new Date().toISOString(),
       });
-      //console.log(r);
-      if (null === r) {
+      console.log(r);
+      if (r.id) {
         alert(`Le patient "${pat?.prenom} ${pat?.nom}" a quitte l'hopital`);
         setSelectedPatient(undefined);
         loadData();
-        if (selectedPatient) {
-          setSelectedPatient(pat);
-        }
+      } else {
+        console.log(r);
+        alert("Error \n" + JSON.stringify(r));
       }
     }
   }
@@ -131,10 +132,17 @@ export default function Patients() {
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
 
-      <div>
+      <div className="flex gap-2">
         <Button
           title="Nouveau Patient"
           onClick={() => setShowFormPatient(!showFormPatient)}
+        />
+        <Button
+          title="Refrresh"
+          onClick={() => {
+            loadData();
+            setSelectedPatient(undefined);
+          }}
         />
       </div>
 

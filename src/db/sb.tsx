@@ -44,16 +44,10 @@ export async function DeleteItem(table_name: string, item_data: any) {
 }
 
 export async function UpdateItem(table_name: string, upd_data: any) {
-  /* const { data, error } = await supabase
-    .from(table_name)
-    .update(upd_data)
-    .eq("id", upd_data.id)
-    .select()
-    .single(); */
-
   const { data, error } = await supabase
     .from(table_name)
     .update(upd_data)
+    .eq("id", upd_data.id)
     .select()
     .single();
 

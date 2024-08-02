@@ -43,18 +43,29 @@ export default function PatientCard({
       </div>
       <div className="flex gap-2 flex-col lg:flex-row  ">
         <Button title="OK" onClick={() => onPatientCardOk(selectedPatient)} />
-        <Button
-          title="UPDATE"
-          onClick={() => onPatientCardUpdate(selectedPatient)}
-        />
-        <Button
-          title="DELETE"
-          onClick={() => onPatientCardDelete(selectedPatient)}
-        />
-        <Button
-          title="SORTIE HOPITAL"
-          onClick={() => onPatientExitHospital(selectedPatient)}
-        />
+
+        {!selectedPatient.left_at && (
+          <>
+            <Button
+              title="UPDATE"
+              onClick={() => onPatientCardUpdate(selectedPatient)}
+            />
+            <Button
+              title="DELETE"
+              onClick={() => onPatientCardDelete(selectedPatient)}
+            />
+            <Button
+              title="SORTIE HOPITAL"
+              onClick={() => onPatientExitHospital(selectedPatient)}
+            />{" "}
+          </>
+        )}
+
+        {selectedPatient.left_at && (
+          <div className="bg-red-500 text-white p-1 text-[8pt] font-bold  rounded-md text-center px-2">
+            A DEJA QUITTE L'HOPITAL
+          </div>
+        )}
       </div>
     </div>
   ) : null;

@@ -15,8 +15,8 @@ export type TPatient = {
   prenom: string;
   phone: string;
   dob: string;
-  entered_at?: Date;
-  left_at?: Date;
+  entered_at?: string;
+  left_at?: string;
   dep: string;
   photo?: string;
 };
