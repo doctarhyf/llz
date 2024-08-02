@@ -17,7 +17,7 @@ export default function PatientCard({
   onPatientCardDelete: (pat: TPatient | undefined) => void;
 }) {
   return selectedPatient ? (
-    <div className="p-4 border h-fit w-fit ">
+    <div className="p-4 border h-fit w-full sm:w-fit">
       <div className="text-gray-500 font-serif italic">Patient ID</div>
       <div>
         {selectedPatient &&

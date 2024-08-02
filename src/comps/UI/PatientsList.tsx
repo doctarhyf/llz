@@ -11,7 +11,7 @@ export default function PatientsList({
   selectedPatient: TPatient | undefined;
 }) {
   return (
-    <div className=" w-52 ">
+    <div className={`  ${selectedPatient ? "hidden" : "block"} w-full sm:w-52`}>
       {patientsf?.map((pat, i) => (
         <div
           key={i}
