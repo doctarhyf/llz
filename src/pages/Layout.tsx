@@ -54,7 +54,7 @@ const Layout = () => {
         </ul>
       </nav>
 
-      <div className="p-4">
+      <div className="p-4 flex-grow">
         <Outlet />
       </div>
     </div>
