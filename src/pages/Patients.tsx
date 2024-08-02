@@ -27,18 +27,20 @@ export default function Patients() {
     loadData();
   }, []);
 
-  async function loadData() {
+  async function loadData(deleteAlert: boolean = false) {
     setloading(true);
     const p = (await SB.LoadAllItems(TABLES_NAMES.PATIENTS)) as TPatient[];
     setPatients(p);
     setPatientsf(p);
     setloading(false);
+    if (deleteAlert) setAlertMessage(undefined);
   }
 
   function onPatientAdded(pat: TPatient) {
     alert(JSON.stringify(pat));
     setShowFormPatient(false);
     setAlertMessage({ type: "success", message: "New patient added!" });
+    loadData(true);
   }
   function onPatientAddError(error: any) {
     alert(JSON.stringify(error));
@@ -75,6 +77,7 @@ export default function Patients() {
   function onPatientCardOk(pat: TPatient | undefined) {
     setSelectedPatient(undefined);
     console.log(pat);
+    setAlertMessage(undefined);
   }
 
   function onPatientCardUpdate(pat: TPatient | undefined) {
@@ -83,12 +86,24 @@ export default function Patients() {
     console.log(pat);
   }
 
-  function onPatientCardDelete(pat: TPatient | undefined) {
+  function onPatientUpdated(pat: TPatient | undefined) {
+    setShowFormPatient(false);
+    loadData();
+    console.log(pat);
+    alert("updated");
+  }
+
+  async function onPatientCardDelete(pat: TPatient | undefined) {
     setSelectedPatient(undefined);
     if (window.confirm(`Delete ${pat?.prenom} ${pat?.nom}?`)) {
-    } else {
+      const r = await SB.DeleteItem(TABLES_NAMES.PATIENTS, pat);
+      console.log(r);
+      if (null === r) {
+        setSelectedPatient(undefined);
+        setPatientsf((old) => old?.filter((it) => it.id !== pat?.id));
+        //loadData();
+      }
     }
-    //console.log(pat);
   }
 
   return (
@@ -104,9 +119,11 @@ export default function Patients() {
 
       {showFormPatient ? (
         <FormPatient
+          onPatientUpdated={onPatientUpdated}
           onPatientAdded={onPatientAdded}
           onPatientAddError={onPatientAddError}
           onCancel={() => setShowFormPatient(false)}
+          updatingPatient={selectedPatient}
         />
       ) : (
         <div className="flex flex-col">
@@ -118,7 +135,7 @@ export default function Patients() {
           />
           {loading && <Loading />}
           <Alert alertMessage={alertMessage} />
-          <div className="flex gap-4 py-4  ">
+          <div className="flex gap-4 py-4    ">
             <PatientsList
               onPatientSelected={onPatientSelected}
               patientsf={patientsf}

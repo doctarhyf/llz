@@ -10,27 +10,45 @@ type FormProps = {
   onPatientAdded: (patient: TPatient) => void;
   onCancel: () => void;
   onPatientAddError: (error: any) => void;
+  updatingPatient: TPatient | undefined;
+  onPatientUpdated: (patient: TPatient) => void;
 };
 
 export default function FormPatient({
   onCancel,
   onPatientAdded,
   onPatientAddError,
+  updatingPatient,
+  onPatientUpdated,
 }: FormProps) {
-  const [data, setdata] = useState<TPatient>({
-    nom: "Mutunda",
-    postnom: "Koji",
-    prenom: "Franvale",
-    phone: "0893092849",
-    dob: "1989-05-15",
-    dep: DEPARTEMENTS.SOINS_CURRATIFS.code,
-  });
+  const [data, setdata] = useState<TPatient>(
+    updatingPatient || {
+      nom: "Mutunda",
+      postnom: "Koji",
+      prenom: "Franvale",
+      phone: "0893092849",
+      dob: "1989-05-15",
+      dep: DEPARTEMENTS.SOINS_CURRATIFS.code,
+    }
+  );
 
   async function onSave() {
-    const res: any = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
+    let res: any;
+
+    if (updatingPatient) {
+      res = await SB.UpdateItem(TABLES_NAMES.PATIENTS, data);
+    } else {
+      res = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
+    }
+
+    console.log(res);
 
     if (res.id) {
-      onPatientAdded(res as TPatient);
+      if (updatingPatient) {
+        onPatientUpdated(res as TPatient);
+      } else {
+        onPatientAdded(res as TPatient);
+      }
     } else if (res.error) {
       onPatientAddError(res as any);
     }

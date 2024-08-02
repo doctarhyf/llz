@@ -24,9 +24,39 @@ export async function InsertItem(tableName: string, newData: unknown) {
 }
 
 export async function LoadAllItems(tableName: string) {
-  const { data, error } = await supabase.from(tableName).select("*");
+  const { data, error } = await supabase
+    .from(tableName)
+    .select("*")
+    .order("created_at", { ascending: false });
 
   if (data) return data;
 
+  return { error: true, ...error };
+}
+
+export async function DeleteItem(table_name: string, item_data: any) {
+  const { error } = await supabase
+    .from(table_name)
+    .delete()
+    .eq("id", item_data.id);
+
+  return error;
+}
+
+export async function UpdateItem(table_name: string, upd_data: any) {
+  /* const { data, error } = await supabase
+    .from(table_name)
+    .update(upd_data)
+    .eq("id", upd_data.id)
+    .select()
+    .single(); */
+
+  const { data, error } = await supabase
+    .from(table_name)
+    .upsert(upd_data)
+    .select()
+    .single();
+
+  if (data) return data;
   return { error: true, ...error };
 }
