@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 type props = {
   login: (phone: string, password: string) => void;
