@@ -24,7 +24,7 @@ const Layout = () => {
       <nav className=" shadow-md  ">
         <ul className={` h-fit   sm:h-[100vh]  bg-sky-500  `}>
           <button className=" w-full p-1  " onClick={toggleMenu}>
-            <Logo small dark iconOnly={!showMenu} />
+            <Logo small dark iconOnly={showMenu} />
           </button>
 
           <div
@@ -36,13 +36,13 @@ const Layout = () => {
               lk.space ? (
                 <li key={i} className=" flex-grow  "></li>
               ) : (
-                <li key={i}>
+                <li onClick={(_) => toggleMenu()} key={i}>
                   <Link
                     className={` w-full   ${
                       location.pathname === lk.to
                         ? " bg-white text-sky-500"
                         : ""
-                    }  px-4 py-1 inline-block hover:bg-white/40    `}
+                    }  px-4 py-1 inline-block hover:bg-white/40 hover:text-white   `}
                     to={lk.to as string}
                   >
                     {lk.title}

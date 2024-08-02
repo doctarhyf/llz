@@ -20,7 +20,7 @@ export default function Logo({
       >
         <img src={hospital} />
       </span>
-      {iconOnly && (
+      {!iconOnly && (
         <span className={` font-serif italic ${dark && "text-white"}`}>
           LaLouise
         </span>

@@ -10,10 +10,13 @@ export default function Patients() {
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
       <div>
-        <Button onClick={(_) => setShowForm(!showForm)} />
+        <Button
+          title="Nouveau Patient"
+          onClick={() => setShowForm(!showForm)}
+        />
       </div>
       {showForm ? (
-        <FormNewPatient />
+        <FormNewPatient onCancel={() => setShowForm(false)} />
       ) : (
         <div>
           <input type="search" />

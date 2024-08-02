@@ -1,5 +1,5 @@
-export const DEP = {
-  MATERNITE: { code: "MAT" },
-  SOINS_CURRATIF: { code: "SCR" },
-  SALLE_DOP: { code: "SOP" },
+export const DEPARTEMENTS = {
+  MAT: { code: "MATERNITE" },
+  SCR: { code: "SOINS CURRATIFS" },
+  SOP: { code: "SALLE D'OP" },
 };

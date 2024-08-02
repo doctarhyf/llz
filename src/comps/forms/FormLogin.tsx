@@ -49,11 +49,9 @@ export default function FormLogin({ login, error, loading }: props) {
             </div>
           </div>
 
-          <div>
-            <Button onClick={onLogin} />
-          </div>
+          <Button title="Login" onClick={onLogin} />
 
-          <div className=" text-[10pt] text-center my-6 text-black/90 absolute bottom-0  ">
+          <div className=" text-[10pt] text-center my-6 dark:text-white/90 text-black/90 absolute bottom-0  ">
             <div>&copy;LaLouise 2024, all rights reserved.</div>
             <div>
               Code and design by <a href="/">@doctarhyf</a>
@@ -66,7 +64,7 @@ export default function FormLogin({ login, error, loading }: props) {
             </div>
           )}
 
-          {loading && <div>Loading ...</div>}
+          {loading && <span className="loading loading-bars loading-xs"></span>}
         </div>
       </div>
       <div className=" bg-gradient-to-br from-sky-500 text-white to-purple-600   hidden md:block bg-black/20 w-1/2  p-4 ">

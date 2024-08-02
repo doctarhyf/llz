@@ -1,10 +1,16 @@
-export default function Button({ onClick }: { onClick: () => void }) {
+export default function Button({
+  title = "Title",
+  onClick,
+}: {
+  title: string;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={onClick}
-      className=" border-sky-500  border my-2 w-52 text-sky-500 hover:text-white hover:bg-sky-500 "
+      className=" border-sky-500  border my-2 w-full  sm:w-52 text-sky-500 hover:text-white hover:bg-sky-500 "
     >
-      Login
+      {title}
     </button>
   );
 }
