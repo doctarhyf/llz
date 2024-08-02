@@ -11,7 +11,7 @@ import { createContext, useState } from "react";
 import FormLogin from "./comps/forms/FormLogin";
 import { Login } from "./helpers/sb";
 import Logout from "./pages/Logout";
-import { User } from "./helpers/types";
+import { TUser } from "./helpers/types";
 import Pharmacie from "./pages/Pharmacie";
 import Finances from "./pages/Finances";
 import Patients from "./pages/Patients";
@@ -19,7 +19,7 @@ import Patients from "./pages/Patients";
 export const UserContext = createContext<any>(undefined);
 
 function App() {
-  const [user, setuser] = useState<User>();
+  const [user, setuser] = useState<TUser>();
   const [error, seterror] = useState<any>(undefined);
   const [loading, setloading] = useState<boolean>(false);
 
@@ -27,7 +27,7 @@ function App() {
     try {
       setloading(true);
       seterror(undefined);
-      const user = (await Login(phone, password)) as User | any;
+      const user = (await Login(phone, password)) as TUser | any;
       console.log(user);
 
       if (user.error) {

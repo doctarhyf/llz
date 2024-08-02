@@ -1,14 +1,21 @@
 import { useState } from "react";
 import { DEPARTEMENTS } from "../../helpers/const";
 import { formatDateToYYYYMMDD } from "../../helpers/funcs";
-import { Patient } from "../../helpers/types";
-import Button from "../Button";
+import { IDepartment, TPatient } from "../../helpers/types";
+import Button from "../UI/Button";
 
-export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
-  const [data, setdata] = useState<Patient>();
+export default function FormPatient({ onCancel }: { onCancel: () => void }) {
+  const [data, setdata] = useState<TPatient>({
+    nom: "Mutunda",
+    postnom: "Koji",
+    prenom: "Franvale",
+    phone: "0893092849",
+    dob: "1989-05-15",
+    dep: DEPARTEMENTS.SOINS_CURRATIFS.code,
+  });
 
   function onSave() {
-    console.log(data);
+    //console.log(data);
   }
 
   return (
@@ -32,7 +39,7 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, nom: e.target.value }
-                  : ({ nom: e.target.value } as Patient)
+                  : ({ nom: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
@@ -47,7 +54,7 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, postnom: e.target.value }
-                  : ({ postnom: e.target.value } as Patient)
+                  : ({ postnom: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
@@ -62,7 +69,7 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, prenom: e.target.value }
-                  : ({ prenom: e.target.value } as Patient)
+                  : ({ prenom: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
@@ -77,7 +84,7 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, phone: e.target.value }
-                  : ({ phone: e.target.value } as Patient)
+                  : ({ phone: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
@@ -93,7 +100,7 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, dob: e.target.value }
-                  : ({ dob: e.target.value } as Patient)
+                  : ({ dob: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
@@ -106,16 +113,14 @@ export default function FormNewPatient({ onCancel }: { onCancel: () => void }) {
               setdata((old) =>
                 old
                   ? { ...old, dep: e.target.value }
-                  : ({ dep: e.target.value } as Patient)
+                  : ({ dep: e.target.value } as TPatient)
               )
             }
             className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
           >
             {Object.entries(DEPARTEMENTS).map(
-              (dep: [key: string, { code: string }], i: number) => (
-                <option key={i} value={dep[0]}>
-                  {dep[1].code}
-                </option>
+              (dep: [key: string, d: IDepartment], i: number) => (
+                <option value={dep[1].code}>{dep[1].label}</option>
               )
             )}
           </select>

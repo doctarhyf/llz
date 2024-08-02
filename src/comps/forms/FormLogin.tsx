@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Logo from "../Logo";
-import Button from "../Button";
+import Button from "../UI/Button";
 
 type props = {
   login: (phone: string, password: string) => void;

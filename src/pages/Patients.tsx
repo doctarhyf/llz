@@ -1,10 +1,21 @@
-import { useState } from "react";
-import FormNewPatient from "../comps/forms/FormNewPatient";
-import Button from "../comps/Button";
+import { useEffect, useState } from "react";
+import FormPatient from "../comps/forms/FormPatient";
+import Button from "../comps/UI/Button";
+import { TPatient } from "../helpers/types";
 
 export default function Patients() {
-  //const [loading, setloading] = useState<boolean>(false);
+  const [users, setusers] = useState<TPatient[]>();
+  const [usersf, setusersf] = useState<TPatient[]>();
   const [showForm, setShowForm] = useState<boolean>(false);
+  const [q, setq] = useState<string>("");
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  async function loadData() {}
+
+  useEffect(() => {}, [q]);
 
   return (
     <div className="">
@@ -16,11 +27,23 @@ export default function Patients() {
         />
       </div>
       {showForm ? (
-        <FormNewPatient onCancel={() => setShowForm(false)} />
+        <FormPatient onCancel={() => setShowForm(false)} />
       ) : (
         <div>
-          <input type="search" />
-          <div></div>
+          <input
+            type="search"
+            className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
+          />
+          <div>
+            {usersf?.map((u, i) => (
+              <div key={i}>
+                <div>
+                  {u.prenom}, {u.nom} {u.postnom}{" "}
+                </div>
+                <div>{u.dep}</div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

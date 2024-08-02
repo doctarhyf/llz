@@ -29,7 +29,7 @@ const Layout = () => {
 
           <div
             className={` transition-all ease-in-out duration-75  ${
-              showMenu ? "hidden" : "block"
+              showMenu ? "block" : "hidden"
             }  `}
           >
             {LINKS.map((lk, i) =>
