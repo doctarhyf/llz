@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Logo from "../Logo";
 import Button from "../UI/Button";
+import Loading from "../UI/Loading";
 
 type props = {
   login: (phone: string, password: string) => void;
@@ -64,7 +65,7 @@ export default function FormLogin({ login, error, loading }: props) {
             </div>
           )}
 
-          {loading && <span className="loading loading-bars loading-xs"></span>}
+          {loading && <Loading />}
         </div>
       </div>
       <div className=" bg-gradient-to-br from-sky-500 text-white to-purple-600   hidden md:block bg-black/20 w-1/2  p-4 ">

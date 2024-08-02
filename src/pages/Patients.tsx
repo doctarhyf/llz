@@ -8,7 +8,10 @@ import * as SB from "../db/sb";
 
 import PatientsList from "../comps/UI/PatientsList";
 import PatientCard from "../comps/UI/PatientCard";
+import Loading from "../comps/UI/Loading";
+
 export default function Patients() {
+  const [loading, setloading] = useState<boolean>(false);
   const [patients, setPatients] = useState<TPatient[]>();
   const [patientsf, setPatientsf] = useState<TPatient[]>();
   const [showFormPatient, setShowFormPatient] = useState<boolean>(false);
@@ -25,9 +28,11 @@ export default function Patients() {
   }, []);
 
   async function loadData() {
+    setloading(true);
     const p = (await SB.LoadAllItems(TABLES_NAMES.PATIENTS)) as TPatient[];
     setPatients(p);
     setPatientsf(p);
+    setloading(false);
   }
 
   function onPatientAdded(pat: TPatient) {
@@ -89,12 +94,14 @@ export default function Patients() {
   return (
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
+
       <div>
         <Button
           title="Nouveau Patient"
           onClick={() => setShowFormPatient(!showFormPatient)}
         />
       </div>
+
       {showFormPatient ? (
         <FormPatient
           onPatientAdded={onPatientAdded}
@@ -102,13 +109,14 @@ export default function Patients() {
           onCancel={() => setShowFormPatient(false)}
         />
       ) : (
-        <div>
+        <div className="flex flex-col">
           <input
             type="search"
             value={q}
             onChange={(e) => setq(e.target.value)}
             className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
           />
+          {loading && <Loading />}
           <Alert alertMessage={alertMessage} />
           <div className="flex gap-4 py-4  ">
             <PatientsList
