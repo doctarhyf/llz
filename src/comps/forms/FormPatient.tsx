@@ -3,6 +3,8 @@ import { DEPARTEMENTS } from "../../helpers/const";
 import { formatDateToYYYYMMDD } from "../../helpers/funcs";
 import { IDepartment, TPatient } from "../../helpers/types";
 import Button from "../UI/Button";
+import * as SB from "../../db/sb";
+import { TABLES_NAMES } from "../../helpers/sb.config";
 
 export default function FormPatient({ onCancel }: { onCancel: () => void }) {
   const [data, setdata] = useState<TPatient>({
@@ -14,8 +16,10 @@ export default function FormPatient({ onCancel }: { onCancel: () => void }) {
     dep: DEPARTEMENTS.SOINS_CURRATIFS.code,
   });
 
-  function onSave() {
+  async function onSave() {
     //console.log(data);
+    const res = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
+    console.log(res);
   }
 
   return (
@@ -120,7 +124,9 @@ export default function FormPatient({ onCancel }: { onCancel: () => void }) {
           >
             {Object.entries(DEPARTEMENTS).map(
               (dep: [key: string, d: IDepartment], i: number) => (
-                <option value={dep[1].code}>{dep[1].label}</option>
+                <option key={i} value={dep[1].code}>
+                  {dep[1].label}
+                </option>
               )
             )}
           </select>
