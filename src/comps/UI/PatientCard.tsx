@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { TPatient } from "../../helpers/types";
 import Button from "./Button";
-import { GetDepartementFullName } from "../../helpers/funcs";
+import { GetDepartementLabel } from "../../helpers/funcs";
 
 const EXCLUDE_COLS = ["id", "created_at", "photo"];
 
@@ -10,11 +10,13 @@ export default function PatientCard({
   onPatientCardOk,
   onPatientCardUpdate,
   onPatientCardDelete,
+  onPatientExitHospital,
 }: {
   selectedPatient: TPatient | undefined;
   onPatientCardOk: (pat: TPatient | undefined) => void;
   onPatientCardUpdate: (pat: TPatient | undefined) => void;
   onPatientCardDelete: (pat: TPatient | undefined) => void;
+  onPatientExitHospital: (pat: TPatient | undefined) => void;
 }) {
   return selectedPatient ? (
     <div className="p-4 border h-fit w-full sm:w-fit">
@@ -31,7 +33,7 @@ export default function PatientCard({
                   :{" "}
                   <span>
                     {key === "dep"
-                      ? GetDepartementFullName(value as string)
+                      ? GetDepartementLabel(value as string)
                       : (value as ReactNode)}
                   </span>
                 </div>
@@ -46,8 +48,12 @@ export default function PatientCard({
           onClick={() => onPatientCardUpdate(selectedPatient)}
         />
         <Button
-          title="DELET"
+          title="DELETE"
           onClick={() => onPatientCardDelete(selectedPatient)}
+        />
+        <Button
+          title="SORTIE HOPITAL"
+          onClick={() => onPatientExitHospital(selectedPatient)}
         />
       </div>
     </div>

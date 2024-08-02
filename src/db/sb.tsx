@@ -53,7 +53,7 @@ export async function UpdateItem(table_name: string, upd_data: any) {
 
   const { data, error } = await supabase
     .from(table_name)
-    .upsert(upd_data)
+    .update(upd_data)
     .select()
     .single();
 

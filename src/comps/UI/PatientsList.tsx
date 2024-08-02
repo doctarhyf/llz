@@ -1,4 +1,4 @@
-import { GetDepartementFullName } from "../../helpers/funcs";
+import { GetDepartementLabel } from "../../helpers/funcs";
 import { TPatient } from "../../helpers/types";
 
 export default function PatientsList({
@@ -25,7 +25,7 @@ export default function PatientsList({
             {pat.prenom}, {pat.nom} {pat.postnom}{" "}
           </div>
           <div className=" font-bold text-sky-400 text-xs   ">
-            {GetDepartementFullName(pat.dep)}
+            {GetDepartementLabel(pat.dep)}
           </div>
         </div>
       ))}

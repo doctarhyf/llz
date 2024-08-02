@@ -10,7 +10,12 @@ export function formatDateToYYYYMMDD(date: Date) {
   return d;
 }
 
-export function GetDepartementFullName(code: string) {
-  return Object.values(DEPARTEMENTS).filter((dep) => dep.code === code)[0]
-    .label;
+export function GetDepartementLabel(code: string) {
+  const f = Object.values(DEPARTEMENTS).filter((dep) => dep.code === code);
+
+  if (Array.isArray(f) && f.length > 0) {
+    return f[0].label;
+  } else {
+    return DEPARTEMENTS.SOINS_CURRATIFS.label;
+  }
 }

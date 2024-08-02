@@ -97,14 +97,32 @@ export default function Patients() {
   }
 
   async function onPatientCardDelete(pat: TPatient | undefined) {
-    setSelectedPatient(undefined);
     if (window.confirm(`Delete ${pat?.prenom} ${pat?.nom}?`)) {
       const r = await SB.DeleteItem(TABLES_NAMES.PATIENTS, pat);
-      console.log(r);
+
       if (null === r) {
         setSelectedPatient(undefined);
         setPatientsf((old) => old?.filter((it) => it.id !== pat?.id));
-        //loadData();
+      }
+    }
+  }
+
+  async function onPatientExitHospital(pat: TPatient | undefined) {
+    if (
+      window.confirm(`Sortie hopital du patient ${pat?.prenom} ${pat?.nom}?`)
+    ) {
+      const r = await SB.UpdateItem(TABLES_NAMES.PATIENTS, {
+        id: pat?.id,
+        left_at: new Date().getTime(),
+      });
+      //console.log(r);
+      if (null === r) {
+        alert(`Le patient "${pat?.prenom} ${pat?.nom}" a quitte l'hopital`);
+        setSelectedPatient(undefined);
+        loadData();
+        if (selectedPatient) {
+          setSelectedPatient(pat);
+        }
       }
     }
   }
@@ -145,6 +163,7 @@ export default function Patients() {
               selectedPatient={selectedPatient}
             />
             <PatientCard
+              onPatientExitHospital={onPatientExitHospital}
               onPatientCardOk={onPatientCardOk}
               onPatientCardUpdate={onPatientCardUpdate}
               onPatientCardDelete={onPatientCardDelete}
