@@ -12,7 +12,7 @@ export default function PatientsList({
   onPatientSelected: (pat: TPatient) => void;
   selectedPatient: TPatient | undefined;
 }) {
-  const [dep, setdep] = useState<string>(DEPARTEMENTS.SOINS_CURRATIFS.code);
+  const [dep, setdep] = useState<string>("all");
 
   return (
     <div className={`  ${selectedPatient ? "hidden" : "block"} w-full sm:w-52`}>
@@ -37,7 +37,9 @@ export default function PatientsList({
               </option>
             )
           )}
-          <option value={"all"}>ALL</option>
+          <option selected value={"all"}>
+            ALL
+          </option>
         </select>
       </div>
       <div>
