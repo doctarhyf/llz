@@ -5,6 +5,7 @@ import { IDepartment, TPatient } from "../../helpers/types";
 import Button from "../UI/Button";
 import * as SB from "../../db/sb";
 import { TABLES_NAMES } from "../../helpers/sb.config";
+import Loading from "../UI/Loading";
 
 type FormProps = {
   onPatientAdded: (patient: TPatient) => void;
@@ -31,8 +32,10 @@ export default function FormPatient({
       dep: DEPARTEMENTS.SOINS_CURRATIFS.code,
     }
   );
+  const [loading, setloading] = useState<boolean>(false);
 
   async function onSave() {
+    setloading(true);
     let res: any;
 
     if (updatingPatient) {
@@ -40,8 +43,6 @@ export default function FormPatient({
     } else {
       res = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
     }
-
-    console.log(res);
 
     if (res.id) {
       if (updatingPatient) {
@@ -52,20 +53,14 @@ export default function FormPatient({
     } else if (res.error) {
       onPatientAddError(res as any);
     }
+
+    setloading(false);
   }
 
   return (
     <div>
+      {loading && <Loading />}
       <div>
-        {/* <div>
-          <div>Photo</div>
-          <div className="w-48 h-48 bg-slate-600 my-2"></div>
-          <input
-            type="file"
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          /> thisdisi
-        </div> */}
-
         <div>
           <div>Nom</div>
           <input
@@ -155,7 +150,11 @@ export default function FormPatient({
           >
             {Object.entries(DEPARTEMENTS).map(
               (dep: [key: string, d: IDepartment], i: number) => (
-                <option key={i} value={dep[1].code}>
+                <option
+                  key={i}
+                  selected={dep[1].code === data.dep}
+                  value={dep[1].code}
+                >
                   {dep[1].label}
                 </option>
               )

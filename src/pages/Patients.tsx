@@ -91,6 +91,9 @@ export default function Patients() {
     loadData();
     console.log(pat);
     alert("updated");
+    if (selectedPatient) {
+      setSelectedPatient(pat);
+    }
   }
 
   async function onPatientCardDelete(pat: TPatient | undefined) {
