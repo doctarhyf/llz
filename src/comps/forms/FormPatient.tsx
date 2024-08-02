@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { DEPARTEMENTS } from "../../helpers/const";
-import { formatDateToYYYYMMDD } from "../../helpers/funcs";
+//import { formatDateToYYYYMMDD } from "../../helpers/funcs";
 import { IDepartment, TPatient } from "../../helpers/types";
 import Button from "../UI/Button";
 import * as SB from "../../db/sb";
 import { TABLES_NAMES } from "../../helpers/sb.config";
 
-export default function FormPatient({ onCancel }: { onCancel: () => void }) {
+type FormProps = {
+  onPatientAdded: (patient: TPatient) => void;
+  onCancel: () => void;
+  onPatientAddError: (error: any) => void;
+};
+
+export default function FormPatient({
+  onCancel,
+  onPatientAdded,
+  onPatientAddError,
+}: FormProps) {
   const [data, setdata] = useState<TPatient>({
     nom: "Mutunda",
     postnom: "Koji",
@@ -17,9 +27,13 @@ export default function FormPatient({ onCancel }: { onCancel: () => void }) {
   });
 
   async function onSave() {
-    //console.log(data);
-    const res = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
-    console.log(res);
+    const res: any = await SB.InsertItem(TABLES_NAMES.PATIENTS, data);
+
+    if (res.id) {
+      onPatientAdded(res as TPatient);
+    } else if (res.error) {
+      onPatientAddError(res as any);
+    }
   }
 
   return (
@@ -98,7 +112,6 @@ export default function FormPatient({ onCancel }: { onCancel: () => void }) {
           <div>DOB</div>
           <input
             type="date"
-            defaultValue={formatDateToYYYYMMDD(new Date())}
             value={data?.dob}
             onChange={(e) =>
               setdata((old) =>

@@ -12,10 +12,21 @@ export async function Login(phone: string, password: string) {
 }
 
 export async function InsertItem(tableName: string, newData: unknown) {
-  const { data, error } = await supabase.from(tableName).insert([newData]);
+  const { data, error } = await supabase
+    .from(tableName)
+    .insert(newData)
+    .select()
+    .single();
 
-  console.log(data, error);
-  if (error) return { error: true, ...error };
+  if (data) return data;
 
-  return data;
+  return { error: true, ...error };
+}
+
+export async function LoadAllItems(tableName: string) {
+  const { data, error } = await supabase.from(tableName).select("*");
+
+  if (data) return data;
+
+  return { error: true, ...error };
 }
