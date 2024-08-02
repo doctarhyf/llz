@@ -112,6 +112,7 @@ export default function Patients() {
     if (
       window.confirm(`Sortie hopital du patient ${pat?.prenom} ${pat?.nom}?`)
     ) {
+      setloading(true);
       const r = await SB.UpdateItem(TABLES_NAMES.PATIENTS, {
         id: pat?.id,
         left_at: new Date().toISOString(),
@@ -125,6 +126,7 @@ export default function Patients() {
         console.log(r);
         alert("Error \n" + JSON.stringify(r));
       }
+      setloading(false);
     }
   }
 
