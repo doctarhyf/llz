@@ -134,7 +134,7 @@ export default function Patients() {
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
 
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col  gap-2">
         <Button
           title="Nouveau Patient"
           onClick={() => setShowFormPatient(!showFormPatient)}

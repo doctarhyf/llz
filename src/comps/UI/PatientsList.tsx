@@ -55,7 +55,7 @@ export default function PatientsList({
           AFFICHER SORTIES HOPITAL
         </label>
       </div>
-      <div>
+      <div className="flex  flex-col md:flex-row   ">
         {patientsf
           ?.filter((it) => (dep === "all" ? true : it.dep === dep))
           .filter((it) => (showExit ? true : !it.left_at))
@@ -65,7 +65,7 @@ export default function PatientsList({
               onClick={(_) => onPatientSelected(pat)}
               className={` ${
                 pat.id === selectedPatient?.id && "bg-sky-800"
-              } w-full  cursor-pointer hover:bg-sky-500 hover:text-white 
+              } min-w-full md:mx-4  cursor-pointer hover:bg-sky-500 hover:text-white 
              border p-2 mb-4 border-slate-500 hover:border-sky-500`}
             >
               <div className={` ${pat.left_at && " line-through italic "}  `}>
