@@ -45,6 +45,7 @@ function App() {
     console.log(setMousePosition);
 
     const handleMouseMove = (event: MouseEvent) => {
+      console.log(event);
       //const mp = { x: event.clientX, y: event.clientY };
       removeCookie("llz_user");
       setCookie("llz_user", JSON.stringify(user), {
