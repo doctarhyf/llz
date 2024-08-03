@@ -24,10 +24,14 @@ function App() {
   const [user, setuser] = useState<TUser>();
   const [error, seterror] = useState<any>(undefined);
   const [loading, setloading] = useState<boolean>(false);
-  const [cookies, setCookie] = useCookies(["llz_user"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["llz_user"]);
+  const [mousePosition, setMousePosition] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
 
   useEffect(() => {
-    console.log(cookies);
+    // console.log(cookies);
     const ck = Object.entries(cookies);
 
     if (ck.length > 0) {
@@ -37,6 +41,29 @@ function App() {
         setuser(u);
       }
     }
+
+    console.log(setMousePosition);
+
+    const handleMouseMove = (event: MouseEvent) => {
+      //const mp = { x: event.clientX, y: event.clientY };
+      removeCookie("llz_user");
+      setCookie("llz_user", JSON.stringify(user), {
+        expires: GetLaterDate("i", 5),
+      });
+      /*
+      setMousePosition(mp);
+      console.log(mp); */
+    };
+
+    // Attach the event listener
+    window.addEventListener("mousemove", handleMouseMove);
+
+    console.log(mousePosition);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
   }, []);
 
   async function login(phone: string, password: string) {
@@ -65,24 +92,25 @@ function App() {
     }
   }
 
-  return !user ? (
-    <FormLogin login={login} error={error} loading={loading} />
-  ) : (
-    <UserContext.Provider value={[user, setuser]}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="patients" element={<Patients />} />
-            <Route path="pharmacie" element={<Pharmacie />} />
-            <Route path="finances" element={<Finances />} />
-            <Route path="logout" element={<Logout />} />
-            <Route path="*" element={<NoPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </UserContext.Provider>
-  );
+  if (user)
+    return (
+      <UserContext.Provider value={[user, setuser]}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="patients" element={<Patients />} />
+              <Route path="pharmacie" element={<Pharmacie />} />
+              <Route path="finances" element={<Finances />} />
+              <Route path="logout" element={<Logout />} />
+              <Route path="*" element={<NoPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+    );
+
+  return <FormLogin login={login} error={error} loading={loading} />;
 }
 
 export default App;

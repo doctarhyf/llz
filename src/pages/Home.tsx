@@ -1,6 +1,7 @@
 import { SLIDES } from "../helpers/const";
+import React from "react";
 
-export default function Home() {
+const Home = React.memo(() => {
   return (
     <div className="w-full ">
       <div className=" text-xl py-4 border-b w-full ">
@@ -14,4 +15,6 @@ export default function Home() {
       </div>
     </div>
   );
-}
+});
+
+export default Home;
