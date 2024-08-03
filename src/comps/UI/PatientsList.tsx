@@ -13,6 +13,7 @@ export default function PatientsList({
   selectedPatient: TPatient | undefined;
 }) {
   const [dep, setdep] = useState<string>("all");
+  const [showExit, setShowExit] = useState<boolean | undefined>(true);
 
   return (
     <div className={`  ${selectedPatient ? "hidden" : "block"} w-full sm:w-52`}>
@@ -43,8 +44,21 @@ export default function PatientsList({
         </select>
       </div>
       <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={showExit}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setShowExit(e.target.checked);
+            }}
+          />
+          AFFICHER SORTIES HOPITAL
+        </label>
+      </div>
+      <div>
         {patientsf
           ?.filter((it) => (dep === "all" ? true : it.dep === dep))
+          .filter((it) => (showExit ? true : !it.left_at))
           .map((pat, i) => (
             <div
               key={i}
