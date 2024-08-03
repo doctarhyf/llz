@@ -7,7 +7,7 @@ import Home from "./pages/Home";
 
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import FormLogin from "./comps/forms/FormLogin";
 import { Login } from "./helpers/sb";
 import Logout from "./pages/Logout";
@@ -15,6 +15,8 @@ import { TUser } from "./helpers/types";
 import Pharmacie from "./pages/Pharmacie";
 import Finances from "./pages/Finances";
 import Patients from "./pages/Patients";
+import { useCookies } from "react-cookie";
+import { GetLaterDate } from "./helpers/funcs";
 
 export const UserContext = createContext<any>(undefined);
 
@@ -22,6 +24,20 @@ function App() {
   const [user, setuser] = useState<TUser>();
   const [error, seterror] = useState<any>(undefined);
   const [loading, setloading] = useState<boolean>(false);
+  const [cookies, setCookie] = useCookies(["llz_user"]);
+
+  useEffect(() => {
+    console.log(cookies);
+    const ck = Object.entries(cookies);
+
+    if (ck.length > 0) {
+      const u = cookies.llz_user;
+
+      if (u) {
+        setuser(u);
+      }
+    }
+  }, []);
 
   async function login(phone: string, password: string) {
     try {
@@ -36,6 +52,9 @@ function App() {
       } else {
         setuser(user);
         seterror(undefined);
+        setCookie("llz_user", JSON.stringify(user), {
+          expires: GetLaterDate("i", 5),
+        });
       }
       setloading(false);
     } catch (e) {

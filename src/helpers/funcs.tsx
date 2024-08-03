@@ -1,4 +1,4 @@
-import { DEPARTEMENTS } from "./const";
+import { DEPARTEMENTS, TIME_CONST } from "./const";
 
 export function formatDateToYYYYMMDD(date: Date) {
   const year = date.getFullYear();
@@ -18,4 +18,21 @@ export function GetDepartementLabel(code: string) {
   } else {
     return DEPARTEMENTS.SOINS_CURRATIFS.label;
   }
+}
+
+export function GetLaterDate(add: "h" | "i" | "s", amount: number) {
+  const cur_date = new Date();
+  const cur_milli = cur_date.getTime();
+
+  let mill2add = 0;
+
+  if (add === "h") {
+    mill2add = amount * TIME_CONST.ONE_HOUR;
+  } else if (add === "i") {
+    mill2add = amount * TIME_CONST.ONE_MIN;
+  } else {
+    mill2add = amount * TIME_CONST.ONE_SEC;
+  }
+
+  return new Date(cur_milli + mill2add);
 }

@@ -162,7 +162,7 @@ export default function Patients() {
             type="search"
             value={q}
             onChange={(e) => setq(e.target.value)}
-            className=" w-full sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
+            className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
           />
           {loading && <Loading />}
           <Alert alertMessage={alertMessage} />

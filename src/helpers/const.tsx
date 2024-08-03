@@ -1,6 +1,5 @@
 import { TDepartements } from "./types";
 
-
 export const DEPARTEMENTS: TDepartements = {
   MATERNITE: { code: "MAT", label: "MATERNITE" },
   SOINS_CURRATIFS: { code: "SCR", label: "SOINS CURRATIFS" },
@@ -12,3 +11,9 @@ export const SLIDES = [
   "https://thumbs.dreamstime.com/b/modern-hospital-high-tech-equipment-sleek-design-including-smart-beds-touch-screens-created-generative-ai-276659372.jpg",
   "https://media.istockphoto.com/id/1364075546/photo/empty-corridor-in-modern-hospital-with-information-counter-and-hospital-bed-in-rooms-3d.jpg?s=612x612&w=0&k=20&c=xxFDmIVpH1wJaaiorpvfzec4RRggSb48PDb_dU9bTjo=",
 ];
+
+export const TIME_CONST = {
+  ONE_SEC: 1000,
+  ONE_MIN: 1000 * 60,
+  ONE_HOUR: 1000 * 60 * 60,
+};

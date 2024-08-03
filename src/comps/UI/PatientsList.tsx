@@ -28,7 +28,7 @@ export default function PatientsList({
         <select
           value={dep}
           onChange={(e) => setdep(e.target.value)}
-          className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          className=" w-full outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
         >
           {Object.entries(DEPARTEMENTS).map(
             (dep: [key: string, d: IDepartment], i: number) => (

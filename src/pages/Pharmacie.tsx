@@ -1,3 +1,8 @@
 export default function Pharmacie() {
-  return <div>Pharmacie</div>;
+  return (
+    <div>
+      <div className=" text-xl py-4 border-b w-full ">Patients</div>
+      <div></div>
+    </div>
+  );
 }
