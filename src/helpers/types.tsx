@@ -27,3 +27,13 @@ export interface IDepartment {
 }
 
 export type TDepartements = { [key: string]: IDepartment };
+
+export type TMed = {
+  id?: number;
+  created_at?: string;
+  medName: string;
+  medAmount: number;
+  medType: string;
+  medPrice: number;
+  medSoldBy: string;
+};

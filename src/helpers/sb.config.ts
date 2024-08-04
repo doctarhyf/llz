@@ -8,4 +8,5 @@ export const supabase = createClient(
 export const TABLES_NAMES = {
   USERS: "llz_users",
   PATIENTS: "llz_patients",
+  MEDS: "med_",
 };
