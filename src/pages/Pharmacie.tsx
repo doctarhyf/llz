@@ -70,9 +70,7 @@ export default function Pharmacie() {
 
   function onMedUpdated(med: TMed) {
     console.log(med);
-    setUpdatingMed(undefined);
-    setShowForm(false);
-    setSelectedMed(undefined);
+    init();
     loadData();
   }
 
@@ -90,10 +88,28 @@ export default function Pharmacie() {
     setUpdatingMed(med);
   }
 
+  async function onMedCardDelete(med: TMed) {
+    console.log(med);
+    setloading(true);
+    const r = await SB.DeleteItem(TABLES_NAMES.MEDS, med);
+    if (r === null) {
+      loadData();
+      alert("Med deleted!");
+      init();
+    }
+    setloading(false);
+  }
+
+  function init() {
+    setSelectedMed(undefined);
+    setUpdatingMed(undefined);
+    setShowForm(false);
+  }
+
   return (
     <div>
       <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
-      <Button title="New Med" onClick={() => setShowForm(true)} />
+      {}
       {loading && <Loading />}
       <div>
         <input
@@ -115,11 +131,15 @@ export default function Pharmacie() {
       )}
 
       {!selectedMed && !updatingMed && !showForm && (
-        <MedsList onMedSelected={onMedSelected} medsf={medsf} />
+        <div>
+          <Button title="New Med" onClick={() => setShowForm(true)} />
+          <MedsList onMedSelected={onMedSelected} medsf={medsf} />
+        </div>
       )}
 
       {selectedMed && (
         <MedCard
+          onMedCardDelete={onMedCardDelete}
           selectedMed={selectedMed}
           onMedCardOkay={onMedCardOkay}
           onMedCardUpdate={onMedCardUpdate}

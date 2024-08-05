@@ -38,9 +38,9 @@ const Layout = () => {
               ) : (
                 <li onClick={(_) => toggleMenu()} key={i}>
                   <Link
-                    className={` w-full   ${
+                    className={` w-full dark:text-white   ${
                       location.pathname === lk.to
-                        ? " bg-white text-sky-500"
+                        ? " bg-white dark:text-black text-sky-500"
                         : ""
                     }  px-4 py-1 inline-block hover:bg-white/40 hover:text-white   `}
                     to={lk.to as string}

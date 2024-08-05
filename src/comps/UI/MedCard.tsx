@@ -5,10 +5,12 @@ export default function MedCard({
   selectedMed,
   onMedCardOkay,
   onMedCardUpdate,
+  onMedCardDelete,
 }: {
   selectedMed: TMed | undefined;
   onMedCardOkay: () => void;
   onMedCardUpdate: (med: TMed) => void;
+  onMedCardDelete: (med: TMed) => void;
 }) {
   return (
     <div>
@@ -26,6 +28,10 @@ export default function MedCard({
         <Button
           title="UPDATE"
           onClick={() => selectedMed && onMedCardUpdate(selectedMed)}
+        />
+        <Button
+          title="DELETE"
+          onClick={() => selectedMed && onMedCardDelete(selectedMed)}
         />
       </div>
     </div>
