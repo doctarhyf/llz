@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import * as SB from "../../db/sb";
 import { MEDS_FORMS } from "../../helpers/const";
 import { TABLES_NAMES } from "../../helpers/sb.config";
-import { IFormSelectField, TMed } from "../../helpers/types";
+import { TMed } from "../../helpers/types";
 import Button from "../UI/Button";
 import Loading from "../UI/Loading";
 
