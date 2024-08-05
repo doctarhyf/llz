@@ -89,15 +89,17 @@ export default function Pharmacie() {
   }
 
   async function onMedCardDelete(med: TMed) {
-    console.log(med);
-    setloading(true);
-    const r = await SB.DeleteItem(TABLES_NAMES.MEDS, med);
-    if (r === null) {
-      loadData();
-      alert("Med deleted!");
-      init();
+    if (window.confirm(`Delete "${med.nom}"?`)) {
+      console.log(med);
+      setloading(true);
+      const r = await SB.DeleteItem(TABLES_NAMES.MEDS, med);
+      if (r === null) {
+        loadData();
+        alert("Med deleted!");
+        init();
+      }
+      setloading(false);
     }
-    setloading(false);
   }
 
   function init() {
