@@ -30,10 +30,17 @@ export type TDepartements = { [key: string]: IDepartment };
 
 export type TMed = {
   id?: number;
-  created_at?: string;
-  medName: string;
-  medAmount: number;
-  medType: string;
-  medPrice: number;
-  medSoldBy: string;
+  created_at?: number;
+  updated_at?: number;
+  nom: string; // "Aspirine";
+  nom_generique?: string; // "Acide Acétylsalicylique";
+  dosage: string; // "500 mg";
+  forme: string; // "Comprimé";
+  fabricant?: string; // "Bayer";
+  exp_date?: string; // "2025-01-01";
+  need_presc?: string; // "Non";
+  quantity: number; // 100;
+  price: number; // 5.99;
+  remarques?: string; // "Utilisé pour soulager la douleur";
+  photo?: string;
 };
