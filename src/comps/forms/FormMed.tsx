@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //import { formatDateToYYYYMMDD } from "../../helpers/funcs";
 import * as SB from "../../db/sb";
+import { MEDS_FORMS } from "../../helpers/const";
 import { TABLES_NAMES } from "../../helpers/sb.config";
-import { TMed } from "../../helpers/types";
+import { IFormSelectField, TMed } from "../../helpers/types";
 import Button from "../UI/Button";
 import Loading from "../UI/Loading";
 
@@ -13,6 +14,41 @@ type FormProps = {
   updatingMed: TMed | undefined;
   onMedUpdated: (patient: TMed) => void;
 };
+
+const FormFieldsData = [
+  { title: "Nom", propName: "nom", type: "text" },
+  { title: "Nom Generique", propName: "nom_generique", type: "text" },
+  { title: "Dosage", propName: "dosage", type: "text" },
+  {
+    title: "Forme",
+    propName: "forme",
+    type: "select",
+    options: MEDS_FORMS,
+  },
+  { title: "Fabricant", propName: "fabricant", type: "text" },
+  { title: "Date d'expiration", propName: "exp_date", type: "date" },
+  {
+    title: "Avec Prescription?",
+    propName: "need_presc",
+    type: "select",
+    options: {
+      OUI: {
+        label: "OUI",
+        description: "",
+        value: "OUI",
+      },
+      NON: {
+        label: "NON",
+        description: "",
+        value: "NON",
+      },
+    },
+  },
+  { title: "Quantite", propName: "quantity", type: "number" },
+  { title: "Prix", propName: "price", type: "number" },
+  { title: "Remarques", propName: "remarques", type: "text" },
+  { title: "Photo", propName: "photo", type: "file" },
+];
 
 export default function FormMed({
   onCancel,
@@ -60,111 +96,46 @@ export default function FormMed({
     setloading(false);
   }
 
+  function updateData(k: string, v: any) {
+    setdata((prevState) => ({ ...prevState, [k]: v }));
+  }
+
+  useEffect(() => {
+    console.log("data => ", data);
+  }, [data]);
+
+  function GenerateForm(fieldData: any[]) {
+    return fieldData.map((it, i: number) => (
+      <div key={i}>
+        <div>{it.title}</div>
+        {it.type === "select" && it.options ? (
+          <select
+            onChange={(e) => updateData(it.propName, e.target.value)}
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          >
+            {Object.values(it.options).map((op: any, i) => (
+              <option key={i} value={op.value}>
+                {op.label}
+              </option>
+            ))}
+          </select>
+        ) : (
+          <input
+            type={it.type}
+            value={data ? data[it.propName as keyof TMed] : ""}
+            onChange={(e) => updateData(it.propName, e.target.value)}
+            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+          />
+        )}
+      </div>
+    ));
+  }
+
   return (
     <div>
       {loading && <Loading />}
-      <div>
-        <div>
-          <div>Nom</div>
-          <input
-            type="text"
-            value={data?.nom}
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, nom: e.target.value }
-                  : ({ nom: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        </div>
-        {/*  <div>
-          <div>Nom Generique</div>
-          <input
-            type="text"
-            value={data?.postnom}
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, postnom: e.target.value }
-                  : ({ postnom: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        </div>
-        <div>
-          <div>Prenom</div>
-          <input
-            type="text"
-            value={data?.prenom}
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, prenom: e.target.value }
-                  : ({ prenom: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        </div>
-        <div>
-          <div>Phone</div>
-          <input
-            type="text"
-            value={data?.phone}
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, phone: e.target.value }
-                  : ({ phone: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        </div>
-        <div>
-          <div>DOB</div>
-          <input
-            type="date"
-            value={data?.dob}
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, dob: e.target.value }
-                  : ({ dob: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        </div>
-        <div>
-          <div>Departement</div>
-          <select
-            onChange={(e) =>
-              setdata((old) =>
-                old
-                  ? { ...old, dep: e.target.value }
-                  : ({ dep: e.target.value } as TMed)
-              )
-            }
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          >
-            {Object.entries(DEPARTEMENTS).map(
-              (dep: [key: string, d: IDepartment], i: number) => (
-                <option
-                  key={i}
-                  selected={dep[1].code === data.dep}
-                  value={dep[1].code}
-                >
-                  {dep[1].label}
-                </option>
-              )
-            )}
-          </select>
-        </div> */}
-      </div>
+
+      <div>{GenerateForm(FormFieldsData)}</div>
 
       <div>
         <Button title="SAVE" onClick={onSave} />

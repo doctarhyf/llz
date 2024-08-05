@@ -55,7 +55,7 @@ export default function PatientsList({
           AFFICHER SORTIES HOPITAL
         </label>
       </div>
-      <div className="flex  flex-col md:flex-row   ">
+      <div className="flex  flex-col md:flex-row flex-wrap w-full   ">
         {patientsf
           ?.filter((it) => (dep === "all" ? true : it.dep === dep))
           .filter((it) => (showExit ? true : !it.left_at))

@@ -5,6 +5,9 @@ import * as SB from "../db/sb";
 import { TMed } from "../helpers/types";
 import Loading from "../comps/UI/Loading";
 import { TABLES_NAMES } from "../helpers/sb.config";
+import Button from "../comps/UI/Button";
+
+type TError = [k: string, v: any];
 
 export default function Pharmacie() {
   const [meds, setmeds] = useState<TMed[]>([]);
@@ -13,6 +16,7 @@ export default function Pharmacie() {
   const [q, setq] = useState<string>("");
   const [selectedMed, setSelectedMed] = useState<TMed | undefined>(undefined);
   const [updatingMed, setUpdatingMed] = useState<TMed | undefined>(undefined);
+  const [showForm, setShowForm] = useState<boolean | undefined>();
 
   useEffect(() => {
     loadData();
@@ -34,10 +38,15 @@ export default function Pharmacie() {
   async function loadData() {
     console.log(meds);
     setloading(true);
-    const m = (await SB.LoadAllItems(TABLES_NAMES.MEDS)) as TMed[];
+    const m = (await SB.LoadAllItems(TABLES_NAMES.MEDS)) as any;
+
     setmeds(m);
     setmedsf(m);
-    console.log(m);
+
+    if (m.error) {
+      setmeds([]);
+      setmedsf([]);
+    }
     setloading(false);
   }
 
@@ -45,7 +54,9 @@ export default function Pharmacie() {
     console.log(med);
   }
 
-  function onCancel() {}
+  function onCancel() {
+    setShowForm(false);
+  }
 
   function onMedAddError(med: TMed) {
     console.log(med);
@@ -64,6 +75,7 @@ export default function Pharmacie() {
   return (
     <div>
       <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
+      <Button title="New Med" onClick={() => setShowForm(true)} />
       {loading && <Loading />}
       <div>
         <input
@@ -73,14 +85,17 @@ export default function Pharmacie() {
           className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
         />
       </div>
-      <MedsList onMedSelected={onMedSelected} medsf={medsf} />
-      <FormMed
-        updatingMed={updatingMed}
-        onMedAdded={onMedAdded}
-        onCancel={onCancel}
-        onMedAddError={onMedAddError}
-        onMedUpdated={onMedUpdated}
-      />
+      {selectedMed || showForm || updatingMed ? (
+        <FormMed
+          updatingMed={updatingMed}
+          onMedAdded={onMedAdded}
+          onCancel={onCancel}
+          onMedAddError={onMedAddError}
+          onMedUpdated={onMedUpdated}
+        />
+      ) : (
+        <MedsList onMedSelected={onMedSelected} medsf={medsf} />
+      )}
     </div>
   );
 }

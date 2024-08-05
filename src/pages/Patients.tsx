@@ -166,7 +166,7 @@ export default function Patients() {
           />
           {loading && <Loading />}
           <Alert alertMessage={alertMessage} />
-          <div className="flex gap-4 py-4    ">
+          <div className="flex gap-4 py-4 container    ">
             <PatientsList
               onPatientSelected={onPatientSelected}
               patientsf={patientsf}

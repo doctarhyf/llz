@@ -44,3 +44,9 @@ export type TMed = {
   remarques?: string; // "Utilisé pour soulager la douleur";
   photo?: string;
 };
+
+export interface IFormSelectField {
+  label: string;
+  description: string;
+  value: string;
+}
