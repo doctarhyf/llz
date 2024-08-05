@@ -7,6 +7,7 @@ import { TMed } from "../../helpers/types";
 import Button from "../UI/Button";
 import Loading from "../UI/Loading";
 import { GenerateForm } from "../../helpers/funcs";
+import ButtonLoading from "../UI/ButtonLoading";
 
 type FormProps = {
   onMedAdded: (patient: TMed) => void;
@@ -84,6 +85,8 @@ export default function FormMed({
       res = await SB.InsertItem(TABLES_NAMES.MEDS, data);
     }
 
+    console.log("updiiinnngg", res);
+
     if (res.id) {
       if (updatingMed) {
         onMedUpdated(res as TMed);
@@ -109,10 +112,11 @@ export default function FormMed({
     <div>
       {loading && <Loading />}
 
+      {updatingMed ? <div>Updateing ID:{data.id}</div> : <div>New Med</div>}
       <div>{GenerateForm<TMed>(FormFieldsData, data, updateFormDataState)}</div>
 
       <div>
-        <Button title="SAVE" onClick={onSave} />
+        <ButtonLoading loading={loading} title="SAVE" onClick={onSave} />
         <Button title="CANCEL" onClick={onCancel} />
       </div>
     </div>

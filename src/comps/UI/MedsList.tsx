@@ -16,7 +16,7 @@ export default function MedsList({ onMedSelected, medsf }: props) {
 
       <table className=" table  ">
         <tr className=" table-row ">
-          <td className=" table-cell  ">No</td>
+          <td className=" table-cell  ">ID</td>
           {/* <td className=" table-cell  ">created_at</td> */}
           <td className=" table-cell  ">Nom</td>
           <td className=" table-cell  ">Nom Generique</td>
@@ -32,7 +32,7 @@ export default function MedsList({ onMedSelected, medsf }: props) {
             className=" table-row hover:bg-sky-700 hover:cursor-pointer hover:text-white "
             onClick={(_) => onMedSelected(m)}
           >
-            <td className=" table-cell  ">{i + 1}</td>
+            <td className=" table-cell  ">{m.id}</td>
             {/* <td className=" table-cell  ">{m.created_at}</td> */}
             <td className=" table-cell  ">{m.nom}</td>
             <td className=" table-cell  ">{m.nom_generique}</td>

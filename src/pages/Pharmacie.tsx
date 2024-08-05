@@ -52,11 +52,16 @@ export default function Pharmacie() {
 
   function onMedAdded(med: TMed) {
     console.log(med);
+    loadData();
+    setShowForm(false);
+    setSelectedMed(undefined);
+    setUpdatingMed(undefined);
   }
 
   function onCancel() {
-    //setShowForm(false);
-    //setSelectedMed(undefined);
+    setSelectedMed(undefined);
+    setUpdatingMed(undefined);
+    setShowForm(false);
   }
 
   function onMedAddError(med: TMed) {
@@ -65,12 +70,24 @@ export default function Pharmacie() {
 
   function onMedUpdated(med: TMed) {
     console.log(med);
-    setUpdatingMed(med);
+    setUpdatingMed(undefined);
+    setShowForm(false);
+    setSelectedMed(undefined);
+    loadData();
   }
 
   function onMedSelected(med: TMed) {
     console.log(med);
     setSelectedMed(med);
+  }
+
+  function onMedCardOkay() {
+    setSelectedMed(undefined);
+  }
+
+  function onMedCardUpdate(med: TMed) {
+    setSelectedMed(undefined);
+    setUpdatingMed(med);
   }
 
   return (
@@ -87,17 +104,27 @@ export default function Pharmacie() {
         />
       </div>
 
-      {/* <FormMed
+      {(showForm || updatingMed) && (
+        <FormMed
           updatingMed={updatingMed}
           onMedAdded={onMedAdded}
           onCancel={onCancel}
           onMedAddError={onMedAddError}
           onMedUpdated={onMedUpdated}
         />
-     
-        <MedsList onMedSelected={onMedSelected} medsf={medsf} /> */}
+      )}
 
-      <MedCard />
+      {!selectedMed && !updatingMed && !showForm && (
+        <MedsList onMedSelected={onMedSelected} medsf={medsf} />
+      )}
+
+      {selectedMed && (
+        <MedCard
+          selectedMed={selectedMed}
+          onMedCardOkay={onMedCardOkay}
+          onMedCardUpdate={onMedCardUpdate}
+        />
+      )}
     </div>
   );
 }
