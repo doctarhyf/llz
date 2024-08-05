@@ -6,6 +6,7 @@ import { TMed } from "../helpers/types";
 import Loading from "../comps/UI/Loading";
 import { TABLES_NAMES } from "../helpers/sb.config";
 import Button from "../comps/UI/Button";
+import MedCard from "../comps/UI/MedCard";
 //cool
 
 export default function Pharmacie() {
@@ -54,7 +55,8 @@ export default function Pharmacie() {
   }
 
   function onCancel() {
-    setShowForm(false);
+    //setShowForm(false);
+    //setSelectedMed(undefined);
   }
 
   function onMedAddError(med: TMed) {
@@ -84,17 +86,18 @@ export default function Pharmacie() {
           className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
         />
       </div>
-      {selectedMed || showForm || updatingMed ? (
-        <FormMed
+
+      {/* <FormMed
           updatingMed={updatingMed}
           onMedAdded={onMedAdded}
           onCancel={onCancel}
           onMedAddError={onMedAddError}
           onMedUpdated={onMedUpdated}
         />
-      ) : (
-        <MedsList onMedSelected={onMedSelected} medsf={medsf} />
-      )}
+     
+        <MedsList onMedSelected={onMedSelected} medsf={medsf} /> */}
+
+      <MedCard />
     </div>
   );
 }

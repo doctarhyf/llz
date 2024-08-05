@@ -36,3 +36,34 @@ export function GetLaterDate(add: "h" | "i" | "s", amount: number) {
 
   return new Date(cur_milli + mill2add);
 }
+
+export function GenerateForm<T>(
+  fieldData: any[],
+  data: any,
+  updateFormDataState: (k: string, v: any) => void
+) {
+  return fieldData.map((it, i: number) => (
+    <div key={i}>
+      <div>{it.title}</div>
+      {it.type === "select" && it.options ? (
+        <select
+          onChange={(e) => updateFormDataState(it.propName, e.target.value)}
+          className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+        >
+          {Object.values(it.options).map((op: any, i) => (
+            <option key={i} value={op.value}>
+              {op.label}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          type={it.type}
+          value={data ? data[it.propName as keyof T] : ""}
+          onChange={(e) => updateFormDataState(it.propName, e.target.value)}
+          className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
+        />
+      )}
+    </div>
+  ));
+}

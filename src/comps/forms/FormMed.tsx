@@ -6,6 +6,7 @@ import { TABLES_NAMES } from "../../helpers/sb.config";
 import { TMed } from "../../helpers/types";
 import Button from "../UI/Button";
 import Loading from "../UI/Loading";
+import { GenerateForm } from "../../helpers/funcs";
 
 type FormProps = {
   onMedAdded: (patient: TMed) => void;
@@ -96,7 +97,7 @@ export default function FormMed({
     setloading(false);
   }
 
-  function updateData(k: string, v: any) {
+  function updateFormDataState(k: string, v: any) {
     setdata((prevState) => ({ ...prevState, [k]: v }));
   }
 
@@ -104,38 +105,11 @@ export default function FormMed({
     console.log("data => ", data);
   }, [data]);
 
-  function GenerateForm(fieldData: any[]) {
-    return fieldData.map((it, i: number) => (
-      <div key={i}>
-        <div>{it.title}</div>
-        {it.type === "select" && it.options ? (
-          <select
-            onChange={(e) => updateData(it.propName, e.target.value)}
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          >
-            {Object.values(it.options).map((op: any, i) => (
-              <option key={i} value={op.value}>
-                {op.label}
-              </option>
-            ))}
-          </select>
-        ) : (
-          <input
-            type={it.type}
-            value={data ? data[it.propName as keyof TMed] : ""}
-            onChange={(e) => updateData(it.propName, e.target.value)}
-            className=" outline-none p-1 border border-sky-500 hover:border-sky-400 focus:border-purple-500  "
-          />
-        )}
-      </div>
-    ));
-  }
-
   return (
     <div>
       {loading && <Loading />}
 
-      <div>{GenerateForm(FormFieldsData)}</div>
+      <div>{GenerateForm<TMed>(FormFieldsData, data, updateFormDataState)}</div>
 
       <div>
         <Button title="SAVE" onClick={onSave} />
