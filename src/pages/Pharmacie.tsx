@@ -6,8 +6,7 @@ import { TMed } from "../helpers/types";
 import Loading from "../comps/UI/Loading";
 import { TABLES_NAMES } from "../helpers/sb.config";
 import Button from "../comps/UI/Button";
-
-type TError = [k: string, v: any];
+//cool
 
 export default function Pharmacie() {
   const [meds, setmeds] = useState<TMed[]>([]);
