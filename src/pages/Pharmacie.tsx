@@ -113,6 +113,10 @@ export default function Pharmacie() {
     setMedSortie(med);
   }
 
+  function onMedSortieOk() {
+    setMedSortie(undefined);
+  }
+
   return (
     <div>
       <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
@@ -159,7 +163,9 @@ export default function Pharmacie() {
         />
       )}
 
-      {medSortie && <FormSortieMed />}
+      {medSortie && (
+        <FormSortieMed med={medSortie} onMedSortieOk={onMedSortieOk} />
+      )}
     </div>
   );
 }
