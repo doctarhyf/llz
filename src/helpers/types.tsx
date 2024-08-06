@@ -50,3 +50,14 @@ export interface IFormSelectField {
   description: string;
   value: string;
 }
+
+export interface ISortieMed {
+  created_at?: Date;
+  id?: number;
+  med_id?: number;
+  stock?: number;
+  price?: number;
+  tot_price?: number;
+  stock_out?: number;
+  stock_left?: number;
+}

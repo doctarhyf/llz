@@ -5,7 +5,7 @@ import MedCard from "../comps/UI/MedCard";
 import MedsList from "../comps/UI/MedsList";
 import * as SB from "../db/sb";
 import { TABLES_NAMES } from "../helpers/sb.config";
-import { TMed } from "../helpers/types";
+import { ISortieMed, TMed } from "../helpers/types";
 import FormSortieMed from "../comps/forms/FormSortieMed";
 //cool
 
@@ -113,8 +113,14 @@ export default function Pharmacie() {
     setMedSortie(med);
   }
 
-  function onMedSortieOk() {
+  async function onMedSortieSuccess(m: ISortieMed) {
     setMedSortie(undefined);
+    alert("Med sortie success \n" + JSON.stringify(m));
+    await loadData();
+  }
+
+  function onMedSortieError(e: any) {
+    alert("error");
   }
 
   return (
@@ -164,7 +170,11 @@ export default function Pharmacie() {
       )}
 
       {medSortie && (
-        <FormSortieMed med={medSortie} onMedSortieOk={onMedSortieOk} />
+        <FormSortieMed
+          med={medSortie}
+          onMedSortieSuccess={onMedSortieSuccess}
+          onMedSortieError={onMedSortieError}
+        />
       )}
     </div>
   );

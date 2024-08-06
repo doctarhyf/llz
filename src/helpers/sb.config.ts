@@ -9,4 +9,5 @@ export const TABLES_NAMES = {
   USERS: "llz_users",
   PATIENTS: "llz_patients",
   MEDS: "llz_meds",
+  MEDS_SORTIES: "llz_meds_sortie",
 };
