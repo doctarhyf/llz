@@ -6,6 +6,7 @@ import MedsList from "../comps/UI/MedsList";
 import * as SB from "../db/sb";
 import { TABLES_NAMES } from "../helpers/sb.config";
 import { TMed } from "../helpers/types";
+import FormSortieMed from "../comps/forms/FormSortieMed";
 //cool
 
 export default function Pharmacie() {
@@ -16,6 +17,7 @@ export default function Pharmacie() {
   const [selectedMed, setSelectedMed] = useState<TMed | undefined>(undefined);
   const [updatingMed, setUpdatingMed] = useState<TMed | undefined>(undefined);
   const [showForm, setShowForm] = useState<boolean | undefined>();
+  const [medSortie, setMedSortie] = useState<TMed | undefined>(undefined);
 
   useEffect(() => {
     loadData();
@@ -108,7 +110,7 @@ export default function Pharmacie() {
   }
 
   function onMedListSortieMed(med: TMed) {
-    console.log(med);
+    setMedSortie(med);
   }
 
   return (
@@ -127,7 +129,7 @@ export default function Pharmacie() {
         />
       )}
 
-      {!selectedMed && !updatingMed && !showForm && (
+      {!selectedMed && !updatingMed && !showForm && !medSortie && (
         <div>
           <div>
             <input
@@ -156,6 +158,8 @@ export default function Pharmacie() {
           onMedCardUpdate={onMedCardUpdate}
         />
       )}
+
+      {medSortie && <FormSortieMed />}
     </div>
   );
 }
