@@ -119,7 +119,7 @@ export default function Pharmacie() {
     await loadData();
   }
 
-  function onMedSortieError(e: any) {
+  function onMedSortieError(_: any) {
     alert("error");
   }
 
