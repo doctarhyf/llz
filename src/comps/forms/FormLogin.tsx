@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import Logo from "../Logo";
-import Button from "../UI/Button";
-import Loading from "../UI/Loading";
+import ButtonLoading from "../UI/ButtonLoading";
 
 type props = {
   login: (phone: string, password: string) => void;
@@ -50,7 +49,7 @@ export default function FormLogin({ login, error, loading }: props) {
             </div>
           </div>
 
-          <Button title="Login" onClick={onLogin} />
+          <ButtonLoading loading={loading} title="Login" onClick={onLogin} />
 
           <div className=" text-[10pt] text-center my-6 dark:text-white/90 text-black/90 absolute bottom-0  ">
             <div>&copy;LaLouise 2024, all rights reserved.</div>
@@ -64,8 +63,6 @@ export default function FormLogin({ login, error, loading }: props) {
               {JSON.stringify(error)}
             </div>
           )}
-
-          {loading && <Loading />}
         </div>
       </div>
       <div className=" bg-gradient-to-br from-sky-500 text-white to-purple-600   hidden md:block bg-black/20 w-1/2  p-4 ">

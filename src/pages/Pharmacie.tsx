@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import FormMed from "../comps/forms/FormMed";
+import Loading from "../comps/UI/Loading";
+import MedCard from "../comps/UI/MedCard";
 import MedsList from "../comps/UI/MedsList";
 import * as SB from "../db/sb";
-import { TMed } from "../helpers/types";
-import Loading from "../comps/UI/Loading";
 import { TABLES_NAMES } from "../helpers/sb.config";
-import Button from "../comps/UI/Button";
-import MedCard from "../comps/UI/MedCard";
+import { TMed } from "../helpers/types";
 //cool
 
 export default function Pharmacie() {
@@ -108,19 +107,15 @@ export default function Pharmacie() {
     setShowForm(false);
   }
 
+  function onMedListSortieMed(med: TMed) {
+    console.log(med);
+  }
+
   return (
     <div>
       <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
-      {}
+
       {loading && <Loading />}
-      <div>
-        <input
-          type="search"
-          value={q}
-          onChange={(e) => setq(e.target.value)}
-          className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
-        />
-      </div>
 
       {(showForm || updatingMed) && (
         <FormMed
@@ -134,8 +129,22 @@ export default function Pharmacie() {
 
       {!selectedMed && !updatingMed && !showForm && (
         <div>
-          <Button title="New Med" onClick={() => setShowForm(true)} />
-          <MedsList onMedSelected={onMedSelected} medsf={medsf} />
+          <div>
+            <input
+              placeholder="Recherche medicaments ..."
+              type="search"
+              value={q}
+              onChange={(e) => setq(e.target.value)}
+              className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
+            />
+          </div>
+
+          <MedsList
+            onMedListNewMed={() => setShowForm(true)}
+            onMedListSortieMed={onMedListSortieMed}
+            onMedSelected={onMedSelected}
+            medsf={medsf}
+          />
         </div>
       )}
 

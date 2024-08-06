@@ -1,18 +1,25 @@
 import { TMed } from "../../helpers/types";
+import Button from "./Button";
 
 type props = {
   onMedSelected: (med: TMed) => void;
+  onMedListSortieMed: (med: TMed) => void;
 
-  //selectedMed: (med: TMed) => void;
+  onMedListNewMed: () => void;
   medsf: TMed[];
 };
 
-export default function MedsList({ onMedSelected, medsf }: props) {
+export default function MedsList({
+  onMedSelected,
+  medsf,
+  onMedListSortieMed,
+  onMedListNewMed,
+}: props) {
   //const [loading, setloading] = useState<boolean>(false)
 
   return (
     <div>
-      <h1>Meds</h1>
+      <Button title="New Med" onClick={onMedListNewMed} />
 
       <table className=" table  ">
         <tr className=" table-row ">
@@ -25,12 +32,12 @@ export default function MedsList({ onMedSelected, medsf }: props) {
           <td className=" table-cell  ">Prix</td>
           <td className=" table-cell  ">Quantite</td>
           <td className=" table-cell  ">Photo</td>
+          <td className=" table-cell  ">Controls</td>
         </tr>
         {medsf.map((m, i) => (
           <tr
             key={i}
             className=" table-row hover:bg-sky-700 hover:cursor-pointer hover:text-white "
-            onClick={(_) => onMedSelected(m)}
           >
             <td className=" table-cell  ">{m.id}</td>
             {/* <td className=" table-cell  ">{m.created_at}</td> */}
@@ -42,6 +49,16 @@ export default function MedsList({ onMedSelected, medsf }: props) {
             <td className=" table-cell  ">{m.quantity}</td>
             <td className=" table-cell  ">
               <div className=" w-14 h-14 bg-slate-800 rounded-md overflow-hidden "></div>
+            </td>
+            <td className=" table-cell  ">
+              <div className="flex flex-col ">
+                <Button
+                  small
+                  title="SORTIE"
+                  onClick={() => onMedListSortieMed(m)}
+                />
+                <Button small title="INFO" onClick={() => onMedSelected(m)} />
+              </div>
             </td>
 
             {/* <td className=" table-cell  ">{m.medSoldBy}</td> */}
