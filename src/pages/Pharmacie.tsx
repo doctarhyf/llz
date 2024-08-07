@@ -11,57 +11,26 @@ import TabsContainer from "../comps/UI/TabsContainer";
 //cool
 
 export default function Pharmacie() {
-  const [meds, setmeds] = useState<TMed[]>([]);
-  const [medsf, setmedsf] = useState<TMed[]>([]);
   const [loading, setloading] = useState<boolean>(false);
-  const [q, setq] = useState<string>("");
+
   const [selectedMed, setSelectedMed] = useState<TMed | undefined>(undefined);
   const [updatingMed, setUpdatingMed] = useState<TMed | undefined>(undefined);
 
   const [medSortie, setMedSortie] = useState<TMed | undefined>(undefined);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  function filterMeds(q: string): string {
-    console.log(q);
-    if (q === "") {
-      setmedsf(meds);
-
-      return "";
-    }
-
-    setmedsf(meds.filter((m) => m.nom.toLowerCase().includes(q.toLowerCase())));
-    return q;
-  }
-
-  async function loadData() {
-    console.log(meds);
-    setloading(true);
-    const m = (await SB.LoadAllItems(TABLES_NAMES.MEDS)) as any;
-
-    setmeds(m);
-    setmedsf(m);
-
-    if (m.error) {
-      setmeds([]);
-      setmedsf([]);
-    }
-    setloading(false);
-  }
-
   function onMedAdded(med: TMed) {
     console.log(med);
-    loadData();
 
     setSelectedMed(undefined);
     setUpdatingMed(undefined);
+    setseltab(TABS.MEDS_LIST);
   }
 
   function onCancel() {
     setSelectedMed(undefined);
     setUpdatingMed(undefined);
+    setseltab(TABS.MEDS_LIST);
+    console.log("cool");
   }
 
   function onMedAddError(med: TMed) {
@@ -71,13 +40,11 @@ export default function Pharmacie() {
   function onMedUpdated(med: TMed) {
     console.log(med);
     init();
-    loadData();
   }
 
   function onMedSelected(med: TMed) {
-    console.log(med);
+    //setNextTab(TABS.MEDS_CARD);
     setSelectedMed(med);
-    setseltab(TABS.MEDS_CARD);
   }
 
   function onMedCardOkay() {
@@ -98,7 +65,6 @@ export default function Pharmacie() {
       setloading(true);
       const r = await SB.DeleteItem(TABLES_NAMES.MEDS, med);
       if (r === null) {
-        loadData();
         alert("Med deleted!");
         init();
       }
@@ -119,36 +85,26 @@ export default function Pharmacie() {
   async function onMedSortieSuccess(m: ISortieMed) {
     setMedSortie(undefined);
     alert("Med sortie success \n" + JSON.stringify(m));
-    await loadData();
   }
 
   function onMedSortieError(_: any) {
     alert("error");
   }
 
+  function onMedListNewMed() {
+    setseltab(TABS.FORM_MED);
+  }
+
   const TABS: TTabs = {
     MEDS_LIST: {
       label: "LISTE PRODUITS",
       comp: (
-        <div className=" med-list ">
-          <div>
-            <input
-              placeholder="Recherche medicaments ..."
-              type="text"
-              value={q}
-              onChange={(e) => setq(e.target.value)}
-              className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
-            />
-          </div>
-
-          <MedsList
-            selectedMed={selectedMed}
-            onMedListNewMed={() => setseltab(TABS.FORM_MED)}
-            onMedListSortieMed={onMedListSortieMed}
-            onMedSelected={onMedSelected}
-            medsf={medsf}
-          />
-        </div>
+        <MedsList
+          // onMedListNewMed={onMedListNewMed}
+          selectedMed={selectedMed}
+          onMedListSortieMed={onMedListSortieMed}
+          onMedSelected={onMedSelected}
+        />
       ),
     },
     FORM_MED: {
@@ -162,17 +118,20 @@ export default function Pharmacie() {
           onMedUpdated={onMedUpdated}
         />
       ),
+      hide: true,
     },
 
     MEDS_CARD: {
       label: " Med Card ",
-      comp: (
+      comp: selectedMed ? (
         <MedCard
           onMedCardDelete={onMedCardDelete}
           selectedMed={selectedMed}
           onMedCardOkay={onMedCardOkay}
           onMedCardUpdate={onMedCardUpdate}
         />
+      ) : (
+        <div>No selected med : {selectedMed}</div>
       ),
       hide: true,
     },
