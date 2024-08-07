@@ -5,8 +5,9 @@ import MedCard from "../comps/UI/MedCard";
 import MedsList from "../comps/UI/MedsList";
 import * as SB from "../db/sb";
 import { TABLES_NAMES } from "../helpers/sb.config";
-import { ISortieMed, TMed } from "../helpers/types";
+import { ISortieMed, ITab, TMed, TTabs } from "../helpers/types";
 import FormSortieMed from "../comps/forms/FormSortieMed";
+import TabsContainer from "../comps/UI/TabsContainer";
 //cool
 
 export default function Pharmacie() {
@@ -111,6 +112,7 @@ export default function Pharmacie() {
 
   function onMedListSortieMed(med: TMed) {
     setMedSortie(med);
+    setseltab(TABS.FORM_SORTIE);
   }
 
   async function onMedSortieSuccess(m: ISortieMed) {
@@ -123,13 +125,10 @@ export default function Pharmacie() {
     alert("error");
   }
 
-  return (
-    <div>
-      <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
-
-      {loading && <Loading />}
-
-      {(showForm || updatingMed) && (
+  const TABS: TTabs = {
+    FORM_MED: {
+      label: "Form Med",
+      comp: (
         <FormMed
           updatingMed={updatingMed}
           onMedAdded={onMedAdded}
@@ -137,10 +136,12 @@ export default function Pharmacie() {
           onMedAddError={onMedAddError}
           onMedUpdated={onMedUpdated}
         />
-      )}
-
-      {!selectedMed && !updatingMed && !showForm && !medSortie && (
-        <div>
+      ),
+    },
+    MEDS_LIST: {
+      label: "Meds List",
+      comp: (
+        <div className=" med-list ">
           <div>
             <input
               placeholder="Recherche medicaments ..."
@@ -158,24 +159,48 @@ export default function Pharmacie() {
             medsf={medsf}
           />
         </div>
-      )}
-
-      {selectedMed && (
+      ),
+    },
+    MEDS_CARD: {
+      label: " Med Card ",
+      comp: (
         <MedCard
           onMedCardDelete={onMedCardDelete}
           selectedMed={selectedMed}
           onMedCardOkay={onMedCardOkay}
           onMedCardUpdate={onMedCardUpdate}
         />
-      )}
-
-      {medSortie && (
+      ),
+    },
+    FORM_SORTIE: {
+      label: "Form Sortie",
+      comp: (
         <FormSortieMed
           med={medSortie}
           onMedSortieSuccess={onMedSortieSuccess}
           onMedSortieError={onMedSortieError}
         />
-      )}
+      ),
+    },
+  };
+
+  const [seltab, setseltab] = useState<ITab>(TABS.FORM_MED);
+  function onTabSelected(tab: ITab) {
+    setseltab(tab);
+    console.log(tab);
+  }
+
+  return (
+    <div>
+      <div className=" text-xl py-4 border-b w-full ">Pharmacie</div>
+
+      {loading && <Loading />}
+
+      <TabsContainer
+        tabs={TABS}
+        seltab={seltab}
+        onTabSelected={onTabSelected}
+      />
     </div>
   );
 }

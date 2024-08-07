@@ -61,3 +61,13 @@ export interface ISortieMed {
   stock_out?: number;
   stock_left?: number;
 }
+
+export interface ITab {
+  label: string;
+  comp: JSX.Element;
+  hide?: boolean;
+}
+
+export type TTabs = {
+  [key: string]: ITab;
+};

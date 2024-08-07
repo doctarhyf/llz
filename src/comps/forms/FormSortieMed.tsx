@@ -38,6 +38,10 @@ export default function FormSortieMed({
       if (meds.stock_left && meds.stock_left < 0) {
         seterror(`Unsufficient stock, max sortie ${med.quantity}`);
       }
+
+      if (meds.stock_out === 0) {
+        seterror("Please input amount to take!");
+      }
       setsmed(meds);
       console.log(meds);
     }
