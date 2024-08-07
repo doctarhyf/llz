@@ -38,7 +38,7 @@ const Layout = () => {
               ) : (
                 <li onClick={(_) => toggleMenu()} key={i}>
                   <Link
-                    className={` w-full dark:text-white   ${
+                    className={` w-full dark:text-black/50   ${
                       location.pathname === lk.to
                         ? " bg-white dark:text-black text-sky-500"
                         : ""
