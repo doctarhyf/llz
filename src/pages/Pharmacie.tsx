@@ -17,24 +17,23 @@ export default function Pharmacie() {
   const [q, setq] = useState<string>("");
   const [selectedMed, setSelectedMed] = useState<TMed | undefined>(undefined);
   const [updatingMed, setUpdatingMed] = useState<TMed | undefined>(undefined);
-  const [showForm, setShowForm] = useState<boolean | undefined>();
+
   const [medSortie, setMedSortie] = useState<TMed | undefined>(undefined);
 
   useEffect(() => {
     loadData();
   }, []);
 
-  useEffect(() => {
-    filterMeds(q);
-  }, [q]);
-
-  function filterMeds(q: string) {
+  function filterMeds(q: string): string {
+    console.log(q);
     if (q === "") {
       setmedsf(meds);
-      return;
+
+      return "";
     }
 
     setmedsf(meds.filter((m) => m.nom.toLowerCase().includes(q.toLowerCase())));
+    return q;
   }
 
   async function loadData() {
@@ -55,7 +54,7 @@ export default function Pharmacie() {
   function onMedAdded(med: TMed) {
     console.log(med);
     loadData();
-    setShowForm(false);
+
     setSelectedMed(undefined);
     setUpdatingMed(undefined);
   }
@@ -63,7 +62,6 @@ export default function Pharmacie() {
   function onCancel() {
     setSelectedMed(undefined);
     setUpdatingMed(undefined);
-    setShowForm(false);
   }
 
   function onMedAddError(med: TMed) {
@@ -111,7 +109,6 @@ export default function Pharmacie() {
   function init() {
     setSelectedMed(undefined);
     setUpdatingMed(undefined);
-    setShowForm(false);
   }
 
   function onMedListSortieMed(med: TMed) {
@@ -137,7 +134,7 @@ export default function Pharmacie() {
           <div>
             <input
               placeholder="Recherche medicaments ..."
-              type="search"
+              type="text"
               value={q}
               onChange={(e) => setq(e.target.value)}
               className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
@@ -146,7 +143,7 @@ export default function Pharmacie() {
 
           <MedsList
             selectedMed={selectedMed}
-            onMedListNewMed={() => setShowForm(true)}
+            onMedListNewMed={() => setseltab(TABS.FORM_MED)}
             onMedListSortieMed={onMedListSortieMed}
             onMedSelected={onMedSelected}
             medsf={medsf}
