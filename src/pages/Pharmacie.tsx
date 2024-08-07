@@ -79,15 +79,19 @@ export default function Pharmacie() {
   function onMedSelected(med: TMed) {
     console.log(med);
     setSelectedMed(med);
+    setseltab(TABS.MEDS_CARD);
   }
 
   function onMedCardOkay() {
     setSelectedMed(undefined);
+    setseltab(TABS.MEDS_LIST);
   }
 
   function onMedCardUpdate(med: TMed) {
     setSelectedMed(undefined);
     setUpdatingMed(med);
+    // setseltab(TABS.FORM_MED);
+    alert("cool");
   }
 
   async function onMedCardDelete(med: TMed) {
@@ -141,6 +145,7 @@ export default function Pharmacie() {
           </div>
 
           <MedsList
+            selectedMed={selectedMed}
             onMedListNewMed={() => setShowForm(true)}
             onMedListSortieMed={onMedListSortieMed}
             onMedSelected={onMedSelected}

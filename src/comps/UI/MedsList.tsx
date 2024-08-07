@@ -4,9 +4,9 @@ import Button from "../Buttons/Button";
 type props = {
   onMedSelected: (med: TMed) => void;
   onMedListSortieMed: (med: TMed) => void;
-
   onMedListNewMed: () => void;
   medsf: TMed[];
+  selectedMed: TMed | undefined;
 };
 
 export default function MedsList({
@@ -14,9 +14,8 @@ export default function MedsList({
   medsf,
   onMedListSortieMed,
   onMedListNewMed,
+  selectedMed,
 }: props) {
-  //const [loading, setloading] = useState<boolean>(false)
-
   return (
     <div>
       <Button title="New Med" onClick={onMedListNewMed} />
@@ -37,7 +36,11 @@ export default function MedsList({
         {medsf.map((m, i) => (
           <tr
             key={i}
-            className=" table-row hover:bg-sky-700 hover:cursor-pointer hover:text-white "
+            className={` table-row hover:bg-sky-700 hover:cursor-pointer hover:text-white ${
+              selectedMed &&
+              selectedMed.id === m.id &&
+              " bg-slate-800 text-white "
+            } `}
           >
             <td className=" table-cell  ">{m.id}</td>
             {/* <td className=" table-cell  ">{m.created_at}</td> */}
@@ -60,8 +63,6 @@ export default function MedsList({
                 <Button small title="INFO" onClick={() => onMedSelected(m)} />
               </div>
             </td>
-
-            {/* <td className=" table-cell  ">{m.medSoldBy}</td> */}
           </tr>
         ))}
       </table>

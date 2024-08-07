@@ -1,5 +1,6 @@
 import { TMed } from "../../helpers/types";
 import Button from "../Buttons/Button";
+import ButtonsCont from "../Buttons/ButtonsCont";
 
 export default function MedCard({
   selectedMed,
@@ -23,7 +24,7 @@ export default function MedCard({
           </div>
         ))}
 
-      <div>
+      <ButtonsCont>
         <Button title="OK" onClick={onMedCardOkay} />
         <Button
           title="UPDATE"
@@ -33,7 +34,7 @@ export default function MedCard({
           title="DELETE"
           onClick={() => selectedMed && onMedCardDelete(selectedMed)}
         />
-      </div>
+      </ButtonsCont>
     </div>
   );
 }
