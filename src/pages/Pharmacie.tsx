@@ -126,18 +126,6 @@ export default function Pharmacie() {
   }
 
   const TABS: TTabs = {
-    FORM_MED: {
-      label: "NOUVEAU PRODUIT",
-      comp: (
-        <FormMed
-          updatingMed={updatingMed}
-          onMedAdded={onMedAdded}
-          onCancel={onCancel}
-          onMedAddError={onMedAddError}
-          onMedUpdated={onMedUpdated}
-        />
-      ),
-    },
     MEDS_LIST: {
       label: "LISTE PRODUITS",
       comp: (
@@ -161,6 +149,19 @@ export default function Pharmacie() {
         </div>
       ),
     },
+    FORM_MED: {
+      label: "NOUVEAU PRODUIT",
+      comp: (
+        <FormMed
+          updatingMed={updatingMed}
+          onMedAdded={onMedAdded}
+          onCancel={onCancel}
+          onMedAddError={onMedAddError}
+          onMedUpdated={onMedUpdated}
+        />
+      ),
+    },
+
     MEDS_CARD: {
       label: " Med Card ",
       comp: (

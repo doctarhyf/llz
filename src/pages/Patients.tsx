@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FormPatient from "../comps/forms/FormPatient";
 import Button from "../comps/UI/Button";
-import { TPatient } from "../helpers/types";
+import { ITab, TPatient, TTabs } from "../helpers/types";
 import Alert, { TAlertMessage } from "../comps/UI/Alert";
 import { TABLES_NAMES } from "../helpers/sb.config";
 import * as SB from "../db/sb";
@@ -9,6 +9,8 @@ import * as SB from "../db/sb";
 import PatientsList from "../comps/UI/PatientsList";
 import PatientCard from "../comps/UI/PatientCard";
 import Loading from "../comps/UI/Loading";
+import TabsContainer from "../comps/UI/TabsContainer";
+import ButtonsCont from "../comps/UI/ButtonsCont";
 
 export default function Patients() {
   const [loading, setloading] = useState<boolean>(false);
@@ -130,11 +132,54 @@ export default function Patients() {
     }
   }
 
+  const TABS: TTabs = {
+    NEW_PATIENT: {
+      label: "NOUVEAU PATIENT",
+      comp: (
+        <FormPatient
+          onPatientUpdated={onPatientUpdated}
+          onPatientAdded={onPatientAdded}
+          onPatientAddError={onPatientAddError}
+          onCancel={() => setShowFormPatient(false)}
+          updatingPatient={selectedPatient}
+        />
+      ),
+    },
+    PATIENTS_LIST: {
+      label: "PATIENTS LIST",
+      comp: (
+        <PatientsList
+          onPatientSelected={onPatientSelected}
+          patientsf={patientsf}
+          selectedPatient={selectedPatient}
+        />
+      ),
+    },
+    PATIENT_CARD: {
+      label: "PATIENT CARD",
+      comp: (
+        <PatientCard
+          onPatientExitHospital={onPatientExitHospital}
+          onPatientCardOk={onPatientCardOk}
+          onPatientCardUpdate={onPatientCardUpdate}
+          onPatientCardDelete={onPatientCardDelete}
+          selectedPatient={selectedPatient}
+        />
+      ),
+    },
+  };
+
+  const [seltab, setseltab] = useState<ITab>(TABS.NEW_PATIENT);
+  function onTabSelected(tab: ITab) {
+    setseltab(tab);
+    console.log(tab);
+  }
+
   return (
     <div className="">
       <div className=" text-xl py-4 border-b w-full ">Patients</div>
 
-      <div className="flex flex-col  gap-2">
+      <ButtonsCont>
         <Button
           title="Nouveau Patient"
           onClick={() => setShowFormPatient(!showFormPatient)}
@@ -146,42 +191,16 @@ export default function Patients() {
             setSelectedPatient(undefined);
           }}
         />
-      </div>
+      </ButtonsCont>
 
-      {showFormPatient ? (
-        <FormPatient
-          onPatientUpdated={onPatientUpdated}
-          onPatientAdded={onPatientAdded}
-          onPatientAddError={onPatientAddError}
-          onCancel={() => setShowFormPatient(false)}
-          updatingPatient={selectedPatient}
-        />
-      ) : (
-        <div className="flex flex-col">
-          <input
-            type="search"
-            value={q}
-            onChange={(e) => setq(e.target.value)}
-            className=" w-full  sm:w-52 outline-none border p-1 hover:border-sky-700 focus:border-purple-600"
-          />
-          {loading && <Loading />}
-          <Alert alertMessage={alertMessage} />
-          <div className="flex gap-4 py-4 container    ">
-            <PatientsList
-              onPatientSelected={onPatientSelected}
-              patientsf={patientsf}
-              selectedPatient={selectedPatient}
-            />
-            <PatientCard
-              onPatientExitHospital={onPatientExitHospital}
-              onPatientCardOk={onPatientCardOk}
-              onPatientCardUpdate={onPatientCardUpdate}
-              onPatientCardDelete={onPatientCardDelete}
-              selectedPatient={selectedPatient}
-            />
-          </div>
-        </div>
-      )}
+      {loading && <Loading />}
+      <Alert alertMessage={alertMessage} />
+
+      <TabsContainer
+        tabs={TABS}
+        onTabSelected={onTabSelected}
+        seltab={seltab}
+      />
     </div>
   );
 }

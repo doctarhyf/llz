@@ -6,6 +6,7 @@ import Button from "../UI/Button";
 import * as SB from "../../db/sb";
 import { TABLES_NAMES } from "../../helpers/sb.config";
 import Loading from "../UI/Loading";
+import ButtonsCont from "../UI/ButtonsCont";
 
 type FormProps = {
   onPatientAdded: (patient: TPatient) => void;
@@ -163,10 +164,10 @@ export default function FormPatient({
         </div>
       </div>
 
-      <div>
+      <ButtonsCont>
         <Button title="SAVE" onClick={onSave} />
         <Button title="CANCEL" onClick={onCancel} />
-      </div>
+      </ButtonsCont>
     </div>
   );
 }
