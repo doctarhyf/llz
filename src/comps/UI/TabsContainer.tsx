@@ -11,7 +11,7 @@ export default function TabsContainer({
 }) {
   return (
     <div>
-      <div className=" flex gap-4 border-b border-b-sky-500  ">
+      <div className=" flex flex-col sm:flex-row gap-4 border-b border-b-sky-500  ">
         {Object.values(tabs).map((t: ITab, i: number) =>
           t.hide ? null : (
             <button
