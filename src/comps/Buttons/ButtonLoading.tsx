@@ -1,4 +1,4 @@
-import Loading from "./Loading";
+import Loading from "../UI/Loading";
 
 export default function ButtonLoading({
   title = "Title",

@@ -1,5 +1,5 @@
 import { TMed } from "../../helpers/types";
-import Button from "./Button";
+import Button from "../Buttons/Button";
 
 type props = {
   onMedSelected: (med: TMed) => void;

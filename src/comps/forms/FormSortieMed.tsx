@@ -3,7 +3,7 @@ import * as SB from "../../db/sb";
 import { GenerateForm } from "../../helpers/funcs";
 import { TABLES_NAMES } from "../../helpers/sb.config";
 import { ISortieMed, TMed } from "../../helpers/types";
-import ButtonLoading from "../UI/ButtonLoading";
+import ButtonLoading from "../Buttons/ButtonLoading";
 
 const FormFieldsData = [
   { title: "Qte a sortir", propName: "stock_out", type: "number" },

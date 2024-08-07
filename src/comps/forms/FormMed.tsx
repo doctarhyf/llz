@@ -4,10 +4,10 @@ import * as SB from "../../db/sb";
 import { MEDS_FORMS } from "../../helpers/const";
 import { TABLES_NAMES } from "../../helpers/sb.config";
 import { TMed } from "../../helpers/types";
-import Button from "../UI/Button";
+import Button from "../Buttons/Button";
 import Loading from "../UI/Loading";
 import { GenerateForm } from "../../helpers/funcs";
-import ButtonLoading from "../UI/ButtonLoading";
+import ButtonLoading from "../Buttons/ButtonLoading";
 
 type FormProps = {
   onMedAdded: (patient: TMed) => void;

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { TPatient } from "../../helpers/types";
-import Button from "./Button";
+import Button from "../Buttons/Button";
 import { GetDepartementLabel } from "../../helpers/funcs";
 
 const EXCLUDE_COLS = ["id", "created_at", "photo"];

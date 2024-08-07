@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import FormPatient from "../comps/forms/FormPatient";
-import Button from "../comps/UI/Button";
+import Button from "../comps/Buttons/Button";
 import { ITab, TPatient, TTabs } from "../helpers/types";
 import Alert, { TAlertMessage } from "../comps/UI/Alert";
 import { TABLES_NAMES } from "../helpers/sb.config";
@@ -10,7 +10,7 @@ import PatientsList from "../comps/UI/PatientsList";
 import PatientCard from "../comps/UI/PatientCard";
 import Loading from "../comps/UI/Loading";
 import TabsContainer from "../comps/UI/TabsContainer";
-import ButtonsCont from "../comps/UI/ButtonsCont";
+import ButtonsCont from "../comps/Buttons/ButtonsCont";
 
 export default function Patients() {
   const [loading, setloading] = useState<boolean>(false);
@@ -133,6 +133,16 @@ export default function Patients() {
   }
 
   const TABS: TTabs = {
+    PATIENTS_LIST: {
+      label: "PATIENTS LIST",
+      comp: (
+        <PatientsList
+          onPatientSelected={onPatientSelected}
+          patientsf={patientsf}
+          selectedPatient={selectedPatient}
+        />
+      ),
+    },
     NEW_PATIENT: {
       label: "NOUVEAU PATIENT",
       comp: (
@@ -145,16 +155,7 @@ export default function Patients() {
         />
       ),
     },
-    PATIENTS_LIST: {
-      label: "PATIENTS LIST",
-      comp: (
-        <PatientsList
-          onPatientSelected={onPatientSelected}
-          patientsf={patientsf}
-          selectedPatient={selectedPatient}
-        />
-      ),
-    },
+
     PATIENT_CARD: {
       label: "PATIENT CARD",
       comp: (
@@ -166,6 +167,7 @@ export default function Patients() {
           selectedPatient={selectedPatient}
         />
       ),
+      hide: true,
     },
   };
 

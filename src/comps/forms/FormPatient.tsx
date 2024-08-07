@@ -2,11 +2,11 @@ import { useState } from "react";
 import { DEPARTEMENTS } from "../../helpers/const";
 //import { formatDateToYYYYMMDD } from "../../helpers/funcs";
 import { IDepartment, TPatient } from "../../helpers/types";
-import Button from "../UI/Button";
+import Button from "../Buttons/Button";
 import * as SB from "../../db/sb";
 import { TABLES_NAMES } from "../../helpers/sb.config";
 import Loading from "../UI/Loading";
-import ButtonsCont from "../UI/ButtonsCont";
+import ButtonsCont from "../Buttons/ButtonsCont";
 
 type FormProps = {
   onPatientAdded: (patient: TPatient) => void;
