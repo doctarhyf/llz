@@ -171,8 +171,9 @@ export default function Patients() {
     },
   };
 
-  const [seltab, setseltab] = useState<ITab>(TABS.NEW_PATIENT);
-  function onTabSelected(tab: ITab) {
+  const [seltab, setseltab] = useState<ITab>(TABS.PATIENTS_LIST);
+
+function onTabSelected(tab: ITab) {
     setseltab(tab);
     console.log(tab);
   }
