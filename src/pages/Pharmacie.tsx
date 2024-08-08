@@ -48,20 +48,31 @@ export default function Pharmacie() {
   }
 
   useEffect(() => {
-    setseltab(TABS.MEDS_CARD);
+    if (selectedMed) {
+      setseltab(TABS.MEDS_CARD);
+    } else {
+      setseltab(TABS.MEDS_LIST);
+    }
   }, [selectedMed]);
 
   function onMedCardOkay() {
     setSelectedMed(undefined);
-    setseltab(TABS.MEDS_LIST);
   }
 
   function onMedCardUpdate(med: TMed) {
-    setSelectedMed(undefined);
+    //setSelectedMed(undefined);
     setUpdatingMed(med);
     // setseltab(TABS.FORM_MED);
-    alert("cool");
+    //alert("cool");
   }
+
+  useEffect(() => {
+    if (updatingMed) {
+      setseltab(TABS.FORM_MED);
+    } else {
+      setseltab(TABS.MEDS_LIST);
+    }
+  }, [updatingMed]);
 
   async function onMedCardDelete(med: TMed) {
     if (window.confirm(`Delete "${med.nom}"?`)) {
