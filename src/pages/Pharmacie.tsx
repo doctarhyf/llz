@@ -46,7 +46,7 @@ export default function Pharmacie() {
     //setNextTab(TABS.MEDS_CARD);
     setSelectedMed(med);
   }
-
+  //beta 1
   useEffect(() => {
     if (selectedMed) {
       setseltab(TABS.MEDS_CARD);
