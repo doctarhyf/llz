@@ -47,6 +47,10 @@ export default function Pharmacie() {
     setSelectedMed(med);
   }
 
+  useEffect(() => {
+    setseltab(TABS.MEDS_CARD);
+  }, [selectedMed]);
+
   function onMedCardOkay() {
     setSelectedMed(undefined);
     setseltab(TABS.MEDS_LIST);
@@ -79,8 +83,11 @@ export default function Pharmacie() {
 
   function onMedListSortieMed(med: TMed) {
     setMedSortie(med);
-    setseltab(TABS.FORM_SORTIE);
   }
+
+  useEffect(() => {
+    setseltab(TABS.FORM_SORTIE);
+  }, [medSortie]);
 
   async function onMedSortieSuccess(m: ISortieMed) {
     setMedSortie(undefined);
@@ -91,11 +98,11 @@ export default function Pharmacie() {
     alert("error");
   }
 
-  function onMedListNewMed() {
+  /* function onMedListNewMed() {
     setseltab(TABS.FORM_MED);
-  }
+  } */
 
-  const TABS: TTabs = {
+  let TABS: TTabs = {
     MEDS_LIST: {
       label: "LISTE PRODUITS",
       comp: (
