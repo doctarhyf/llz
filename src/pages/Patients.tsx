@@ -20,7 +20,7 @@ export default function Patients() {
   const [alertMessage, setAlertMessage] = useState<TAlertMessage | undefined>(
     undefined
   );
-  const [q, setq] = useState<string>("");
+  const [q, _] = useState<string>("");
   const [selectedPatient, setSelectedPatient] = useState<TPatient | undefined>(
     undefined
   );

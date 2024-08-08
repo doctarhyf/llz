@@ -69,9 +69,9 @@ props) {
   return showFormNew ? (
     <FormMed
       onCancel={() => setShowFormNew(false)}
-      onMedAdded={(med) => alert("Med added")}
+      onMedAdded={(_) => alert("Med added")}
       onMedAddError={() => alert("Error addfing med!")}
-      onMedUpdated={(med) => alert("On med updated")}
+      onMedUpdated={(_) => alert("On med updated")}
       updatingMed={selectedMed}
       key={0}
     />
